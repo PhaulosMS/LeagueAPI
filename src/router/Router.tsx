@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
+import Home from "../pages/Home/Home";
 import SummonerForm from "../pages/SummonerForm";
 import Navbar from "../components/Navbar/Navbar";
-import ErrorPageNotFound from "../components/ErrorPageNotFound/ErrorPageNotFound";
+import ErrorPageNotFound from "../pages/ErrorPageNotFound/ErrorPageNotFound";
 
 const Router = () => {
   return (

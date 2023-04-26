@@ -26,12 +26,15 @@ const SummonerFormData: SummonerForm = {
 
 const SummonerForm = () => {
   const [summonerState, setSummonerState] = useState(SummonerFormData);
+  const [error, setError] = useState<boolean>(false);
   const { summonerData, summonerName, region, summonerWins, summonerLosses } =
     summonerState;
 
   const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const response = await getSummonerData(summonerName, region);
+    response === null ? setError(true) : setError(false);
     setSummonerState((prevState) => ({
       ...prevState,
       summonerData: response,
@@ -93,22 +96,26 @@ const SummonerForm = () => {
         </select>
       </form>
 
-      {summonerData && (
-        <>
-          <h1>
-            {summonerData.name} - {summonerData.summonerLevel}
-          </h1>
-          <img
-            src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${summonerData.profileIconId}.png`}
-            alt=""
-          />
-        </>
-      )}
-
-      {summonerWins != null && summonerLosses != null && (
-        <h1>
-          {summonerWins} - {summonerLosses} - {handleWinPercentage()}
-        </h1>
+      {error ? (
+        <h1 style={{ color: "Red" }}>Summoner not found</h1>
+      ) : (
+        summonerData && (
+          <div>
+            <h1>
+              Summoner Name: {summonerData.name}
+              Level: {summonerData.summonerLevel}
+            </h1>
+            <img
+              src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${summonerData.profileIconId}.png`}
+              alt=""
+            />
+            {summonerWins != null && summonerLosses != null && (
+              <h1>
+                {summonerWins} - {summonerLosses} - {handleWinPercentage()}
+              </h1>
+            )}
+          </div>
+        )
       )}
     </div>
   );
