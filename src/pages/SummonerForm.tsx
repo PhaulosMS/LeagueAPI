@@ -1,63 +1,124 @@
-import React, {useState } from "react"
-import {Link} from "react-router-dom"
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { getRankedData, getSummonerData } from "../services/index";
 
 type SummonerData = {
-    name: string;
-    summonerLevel: number;
-    profileIconId: number;
-  };
+  name: string;
+  id: number;
+  summonerLevel: number;
+  profileIconId: number;
+};
+
+type SummonerForm = {
+  summonerData?: SummonerData;
+  summonerName: string;
+  region: string;
+  summonerWins?: number;
+  summonerLosses?: number;
+};
+
+const SummonerFormData: SummonerForm = {
+  summonerData: undefined,
+  summonerName: "",
+  region: "euw1",
+  summonerWins: undefined,
+  summonerLosses: undefined,
+};
 
 const SummonerForm = () => {
-    const [summonerData, setSummonerData] = useState<SummonerData | undefined>();
-    const [summonerName, setSummonerName] = useState<string>("Bernard the Dog")
-    const [region, setRegion] = useState("euw1"); // TODO: Setup form to select region. Default EUW for simplicity sake
+  const [summonerState, setSummonerState] = useState(SummonerFormData);
+  const [error, setError] = useState<boolean>(false);
+  const { summonerData, summonerName, region, summonerWins, summonerLosses } =
+    summonerState;
 
-    const URL = `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${import.meta.env.VITE_RIOTAPI_KEY}`
+  const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    const handleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        getSummoner();
-    }
-    const handleSummonerName = (e:  React.ChangeEvent<HTMLInputElement>) => {
-        setSummonerName(e.target.value)
-    }
+    const response = await getSummonerData(summonerName, region);
+    response === null ? setError(true) : setError(false);
+    setSummonerState((prevState) => ({
+      ...prevState,
+      summonerData: response,
+      summonerWins: undefined,
+      summonerLosses: undefined,
+    }));
+  };
 
-    const handleRegion = (e:  React.ChangeEvent<HTMLSelectElement>) => {
-        setRegion(e.target.value);
+  const getRankedStats = async () => {
+    if (summonerData?.id) {
+      const response = await getRankedData(summonerData.id, region);
+      setSummonerState((prevState) => ({
+        ...prevState,
+        summonerWins: response.wins,
+        summonerLosses: response.losses,
+      }));
     }
+  };
 
-    const getSummoner = async () => {
-        try {
-            const response = await axios.get(URL)
-            await setSummonerData(response.data);
-        }
-        catch (error) {
-            console.log(error);
-        }
+  const handleWinPercentage = () => {
+    if (summonerWins != undefined && summonerLosses != undefined) {
+      const games = summonerWins + summonerLosses;
+      const winPercentage = games ? Math.ceil((summonerWins / games) * 100) : 0;
+      return <>{winPercentage}%</>;
     }
-    
+  };
+
+  const handleFormData = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSummonerState((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  useEffect(() => {
+    getRankedStats();
+    console.log("fetched");
+  }, [summonerData]);
+
   return (
     <div>
-        <Link to="/">Home</Link>
-        <form onSubmit={(e) => handleSumbit(e)}>
-            <label htmlFor="SummonerName">Summoner Name</label>
-            <input type="text" name="SummonerName" placeholder="Summoner Name" value={summonerName} onChange={e => handleSummonerName(e)}/>
-            <button>Submit</button>
-                <select name="region" id="region" onChange={e => handleRegion(e)}>
-                    <option value="euw1">EUW</option>
-                    <option value="na1">NA</option>
-                </select>
-        </form>
-     
-        
-        {summonerData && (
-        <>
-          <h1>{summonerData.name} - {summonerData.summonerLevel}</h1>
-          <img src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${summonerData.profileIconId}.png`} alt="" />
-        </>
+      <form onSubmit={(e) => handleSumbit(e)}>
+        <label htmlFor="SummonerName">Summoner Name</label>
+        <input
+          type="text"
+          name="summonerName"
+          placeholder="Summoner Name"
+          value={summonerName}
+          onChange={(e) => handleFormData(e)}
+        />
+        <button>Submit</button>
+        <select name="region" id="region" onChange={(e) => handleFormData(e)}>
+          <option value="euw1">EUW</option>
+          <option value="na1">NA</option>
+        </select>
+      </form>
+
+      {error ? (
+        <h1 style={{ color: "Red" }}>Summoner not found</h1>
+      ) : (
+        summonerData && (
+          <div>
+            <h1>
+              Summoner Name: {summonerData.name}
+              Level: {summonerData.summonerLevel}
+            </h1>
+            <img
+              src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${summonerData.profileIconId}.png`}
+              alt=""
+            />
+            {summonerWins != null && summonerLosses != null && (
+              <h1>
+                {summonerWins} - {summonerLosses} - {handleWinPercentage()}
+              </h1>
+            )}
+          </div>
+        )
       )}
     </div>
-  )
-  }
-export default SummonerForm
+  );
+};
+
+export default SummonerForm;
