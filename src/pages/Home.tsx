@@ -1,9 +1,5 @@
-import { Link } from 'react-router-dom'
-
 const Home = () => {
-  return (
-    <div><Link to="SummonerForm">Summoner Form</Link></div>
-  )
-}
+  return <div>Home Page</div>;
+};
 
-export default Home
+export default Home;
