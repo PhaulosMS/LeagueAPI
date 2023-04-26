@@ -1,11 +1,12 @@
-import Router from './router/Router'
+import Navbar from "./components/Navbar";
+import Router from "./router/Router";
 function App() {
-
   return (
     <>
-      <Router/>
+      <Navbar />
+      <Router />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
