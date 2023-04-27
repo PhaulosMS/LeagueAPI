@@ -4,17 +4,19 @@
 }
 
 .navbar {
+  box-shadow: 2px 2px 2px 1px rgb(63, 62, 62);
   background-color: black;
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   padding: 0 20px;
   top: 0;
   left: 0;
   right: 0;
   z-index: 999;
   transition: background-color 0.3s ease-in-out;
+  margin-bottom: 10px;
 }
 
 .navbar a {
@@ -30,7 +32,7 @@
 }
 
 .navbar img {
-  width: 60px;
+  width: 150px;
   height: 100%;
   object-fit: contain;
 }
