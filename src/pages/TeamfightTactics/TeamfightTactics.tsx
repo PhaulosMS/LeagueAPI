@@ -69,10 +69,7 @@ const TeamfightTactics = () => {
 
   useEffect(() => {
     getTFTRankedStats();
-    console.log("fetched");
   }, [summonerData]);
-
-  console.log(summonerState);
 
   return (
     <div className="container">

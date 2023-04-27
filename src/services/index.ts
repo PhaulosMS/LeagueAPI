@@ -29,11 +29,11 @@ export const getRankedData = async (summonerId: number, region: string) => {
   const response = await axios.get(URL_RANKED_WINS);
 
   const Stats: SummonerStats = {
-    wins: response.data[0]?.wins ?? undefined,
-    losses: response.data[0]?.losses ?? undefined,
-    tier: response.data[0]?.tier ?? undefined,
-    rank: response.data[0]?.rank ?? undefined,
-    LP: response.data[0]?.leaguePoints ?? undefined,
+    wins: response.data[0]?.wins,
+    losses: response.data[0]?.losses,
+    tier: response.data[0]?.tier,
+    rank: response.data[0]?.rank,
+    LP: response.data[0]?.leaguePoints,
   };
   return Stats;
 };
@@ -45,11 +45,11 @@ export const getTFTRankedData = async (summonerId: number, region: string) => {
   const response = await axios.get(URL_TFT_RANKED_STATS);
 
   const Stats: SummonerStats = {
-    wins: response.data[0]?.wins ?? undefined,
-    losses: response.data[0]?.losses ?? undefined,
-    tier: response.data[0]?.tier ?? undefined,
-    rank: response.data[0]?.rank ?? undefined,
-    LP: response.data[0]?.leaguePoints ?? undefined,
+    wins: response.data[0]?.wins,
+    losses: response.data[0]?.losses,
+    tier: response.data[0]?.tier,
+    rank: response.data[0]?.rank,
+    LP: response.data[0]?.leaguePoints,
   };
   return Stats;
 };

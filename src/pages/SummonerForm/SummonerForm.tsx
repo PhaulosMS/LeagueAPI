@@ -69,7 +69,6 @@ const SummonerForm = () => {
 
   useEffect(() => {
     getRankedStats();
-    console.log("fetched");
   }, [summonerData]);
 
   return (
@@ -93,7 +92,7 @@ const SummonerForm = () => {
               <div>
                 <h1>
                   W: {summonerWins} - L: {summonerLosses} G:{" "}
-                  {summonerWins + summonerLosses}
+                  {summonerWins + summonerLosses} {handleWinPercentage()}%
                 </h1>
                 {summonerState.tier} {summonerState.rank} {summonerState.LP}
               </div>
