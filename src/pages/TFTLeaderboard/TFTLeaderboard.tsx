@@ -1,5 +1,7 @@
 import { getTFTChallengerLeaderboard } from "../../services";
 import { useState, useEffect } from "react";
+import ChallengerIcon from "../../images/ranks/TFT_Regalia_Challenger.png";
+import "./styles.css";
 
 type LeaderboardResponse = {
   summonerName: string;
@@ -40,11 +42,15 @@ const TFTLeaderboard = () => {
         ? Math.ceil((player.summonerWins / games) * 100)
         : 0;
       return (
-        <h1 key={player.summonerName}>
-          {index + 1} {player.summonerName} - {player.LP}LP W:{" "}
-          {player.summonerWins} L: {player.summonerLosses} - Challenger -{" "}
-          {winPercentage}%
-        </h1>
+        <tr className="table-row" key={player.summonerName}>
+          <td>{index + 1}</td> <td>{player.summonerName}</td>{" "}
+          <td className="table-row-rank">
+            <img className="rank-icon" src={ChallengerIcon} alt=""></img>
+            <span>Challenger</span>
+          </td>
+          <td>{player.LP}</td> <td>{player.summonerWins}</td> <td>{games}</td>{" "}
+          <td>{winPercentage}</td>
+        </tr>
       );
     });
   };
@@ -56,8 +62,18 @@ const TFTLeaderboard = () => {
 
   return (
     <div>
-      <button onClick={getLeaderboard}>Refresh Data</button>
-      {sortPlayers()}
+      <table className="table">
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Tier</th>
+          <th>LP</th>
+          <th>TOP 4</th>
+          <th>Played</th>
+          <th>Win %</th>
+        </tr>
+        {sortPlayers()}
+      </table>
     </div>
   );
 };

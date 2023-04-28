@@ -1,0 +1,22 @@
+.table {
+  width: 100%;
+}
+
+.table-row {
+  text-align: center;
+}
+
+.table-row-rank {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rank-icon {
+  width: 64px;
+  height: 64px;
+}
+
+.table-row > :nth-child(2) {
+  font-size: 24px;
+}
