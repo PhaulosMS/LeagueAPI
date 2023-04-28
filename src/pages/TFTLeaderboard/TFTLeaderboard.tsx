@@ -1,14 +1,18 @@
 import { getTFTChallengerLeaderboard } from "../../services";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type LeaderboardResponse = {
   summonerName: string;
   leaguePoints: number;
+  wins: number;
+  losses: number;
 };
 
 type Player = {
   summonerName: string;
   LP: number;
+  summonerWins: number;
+  summonerLosses: number;
 };
 
 const TFTLeaderboard = () => {
@@ -20,6 +24,8 @@ const TFTLeaderboard = () => {
       (player: LeaderboardResponse) => ({
         summonerName: player.summonerName,
         LP: player.leaguePoints,
+        summonerWins: player.wins,
+        summonerLosses: player.losses,
       })
     );
     playerData.sort((P1, P2) => P2.LP - P1.LP);
@@ -28,16 +34,29 @@ const TFTLeaderboard = () => {
   };
 
   const sortPlayers = () => {
-    return players.map((player, index) => (
-      <h1 key={player.summonerName}>
-        {index + 1} {player.summonerName} - {player.LP} - Challenger
-      </h1>
-    ));
+    return players.map((player, index) => {
+      const games = player.summonerWins + player.summonerLosses;
+      const winPercentage = games
+        ? Math.ceil((player.summonerWins / games) * 100)
+        : 0;
+      return (
+        <h1 key={player.summonerName}>
+          {index + 1} {player.summonerName} - {player.LP}LP W:{" "}
+          {player.summonerWins} L: {player.summonerLosses} - Challenger -{" "}
+          {winPercentage}%
+        </h1>
+      );
+    });
   };
+
+  useEffect(() => {
+    getLeaderboard();
+    console.log("fetched");
+  }, []);
 
   return (
     <div>
-      <button onClick={getLeaderboard}>Get Data</button>
+      <button onClick={getLeaderboard}>Refresh Data</button>
       {sortPlayers()}
     </div>
   );
