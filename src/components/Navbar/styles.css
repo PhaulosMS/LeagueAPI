@@ -16,7 +16,8 @@
   align-self: flex-start;
 }
 
-.navbar a {
+.navbar a,
+.navbar p {
   color: white;
   text-decoration: none;
   margin: 0 10px;
@@ -41,4 +42,11 @@
 
 .navbar-items a {
   margin: 0 10px;
+}
+
+.isDisabled {
+  color: grey;
+  cursor: not-allowed;
+  opacity: 0.2;
+  text-decoration: none;
 }

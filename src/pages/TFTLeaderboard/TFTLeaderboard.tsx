@@ -19,8 +19,10 @@ type Player = {
 
 const TFTLeaderboard = () => {
   const [players, setPlayers] = useState<Player[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const getLeaderboard = async () => {
+    setLoading(true);
     const response = await getTFTChallengerLeaderboard();
     const playerData: Player[] = response.map(
       (player: LeaderboardResponse) => ({
@@ -32,6 +34,7 @@ const TFTLeaderboard = () => {
     );
     playerData.sort((P1, P2) => P2.LP - P1.LP);
     setPlayers(playerData);
+    setLoading(false);
     console.log(players);
   };
 
@@ -62,18 +65,22 @@ const TFTLeaderboard = () => {
 
   return (
     <div>
-      <table className="table">
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Tier</th>
-          <th>LP</th>
-          <th>TOP 4</th>
-          <th>Played</th>
-          <th>Win %</th>
-        </tr>
-        {sortPlayers()}
-      </table>
+      {loading ? (
+        <h1>Loading... </h1>
+      ) : (
+        <table className="table">
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Tier</th>
+            <th>LP</th>
+            <th>TOP 4</th>
+            <th>Played</th>
+            <th>Win %</th>
+          </tr>
+          {sortPlayers()}
+        </table>
+      )}
     </div>
   );
 };
