@@ -11,7 +11,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-items">
-        <p className="isDisabled">Summoner Search</p>
+        <Link to="/SummonerForm">Summoner Search</Link>
         <Link to="/tft">TFT</Link>
         <Link to="/leaderboard">Leaderboard</Link>
       </div>
