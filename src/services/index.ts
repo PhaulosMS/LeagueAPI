@@ -54,8 +54,8 @@ export const getTFTRankedData = async (summonerId: number, region: string) => {
   return Stats;
 };
 
-export const getTFTChallengerLeaderboard = async () => {
-  const URL_TFT_CHALLENGER_LEADERBOARD = `https://na1.api.riotgames.com/tft/league/v1/challenger?api_key=${API_KEY}`;
+export const getTFTChallengerLeaderboard = async (region: string) => {
+  const URL_TFT_CHALLENGER_LEADERBOARD = `https://${region}.api.riotgames.com/tft/league/v1/challenger?api_key=${API_KEY}`;
 
   const response = await axios.get(URL_TFT_CHALLENGER_LEADERBOARD);
   return response.data.entries;
