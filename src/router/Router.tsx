@@ -4,6 +4,7 @@ import SummonerForm from "../pages/SummonerForm/SummonerForm";
 import Navbar from "../components/Navbar/Navbar";
 import ErrorPageNotFound from "../pages/ErrorPageNotFound/ErrorPageNotFound";
 import TeamfightTactics from "../pages/TeamfightTactics/TeamfightTactics";
+import TFTLeaderboard from "../pages/TFTLeaderboard/TFTLeaderboard";
 
 const Router = () => {
   return (
@@ -13,6 +14,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/SummonerForm" element={<SummonerForm />} />
         <Route path="/tft" element={<TeamfightTactics />} />
+        <Route path="/leaderboard" element={<TFTLeaderboard />} />
         <Route path="*" element={<ErrorPageNotFound />} />
       </Routes>
     </BrowserRouter>

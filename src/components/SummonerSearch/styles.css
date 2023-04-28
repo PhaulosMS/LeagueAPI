@@ -4,7 +4,6 @@ form {
   max-width: 400px;
   width: 100%;
 }
-
 label {
   font-weight: bold;
   margin-bottom: 8px;
@@ -20,6 +19,7 @@ select {
 }
 
 button {
+  display: flex;
   background: #4caf50;
   color: white;
   padding: 12px 20px;
