@@ -2,6 +2,16 @@ import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_RIOTAPI_KEY;
 
+type SummonerStats = {
+  wins?: number;
+  losses?: number;
+  tier: string;
+  rank: string;
+  LP: number;
+};
+
+//League Calls
+
 export const getSummonerData = async (summonerName: string, region: string) => {
   const URL = `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${API_KEY}`;
   try {
@@ -17,8 +27,29 @@ export const getRankedData = async (summonerId: number, region: string) => {
   const URL_RANKED_WINS = `https://${region}.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}?api_key=${API_KEY}`;
 
   const response = await axios.get(URL_RANKED_WINS);
-  const wins = response.data[0]?.wins ?? undefined;
-  const losses = response.data[0]?.losses ?? undefined;
 
-  return { wins, losses };
+  const Stats: SummonerStats = {
+    wins: response.data[0]?.wins,
+    losses: response.data[0]?.losses,
+    tier: response.data[0]?.tier,
+    rank: response.data[0]?.rank,
+    LP: response.data[0]?.leaguePoints,
+  };
+  return Stats;
+};
+
+// TFT Calls
+
+export const getTFTRankedData = async (summonerId: number, region: string) => {
+  const URL_TFT_RANKED_STATS = `https://${region}.api.riotgames.com/tft/league/v1/entries/by-summoner/${summonerId}?api_key=${API_KEY}`;
+  const response = await axios.get(URL_TFT_RANKED_STATS);
+
+  const Stats: SummonerStats = {
+    wins: response.data[0]?.wins,
+    losses: response.data[0]?.losses,
+    tier: response.data[0]?.tier,
+    rank: response.data[0]?.rank,
+    LP: response.data[0]?.leaguePoints,
+  };
+  return Stats;
 };

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Logo from "../../images/rift.gg-1.png";
+import Logo from "../../images/rift.gg-1-edited.png";
 import "./styles.css";
 
 const Navbar = () => {
@@ -8,7 +8,6 @@ const Navbar = () => {
       <Link to="/">
         <img src={Logo} alt="" />
       </Link>
-      <Link to="/">Home</Link>
       <Link to="/SummonerForm">Summoner Search</Link>
       <Link to="/tft">TFT</Link>
     </nav>

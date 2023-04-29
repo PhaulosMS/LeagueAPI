@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { getRankedData, getSummonerData } from "../services/index";
-
-type SummonerData = {
-  name: string;
-  id: number;
-  summonerLevel: number;
-  profileIconId: number;
-};
-
-type SummonerForm = {
-  summonerData?: SummonerData;
-  summonerName: string;
-  region: string;
-  summonerWins?: number;
-  summonerLosses?: number;
-};
+import { getRankedData, getSummonerData } from "../../services/index";
+import SummonerSearch from "../../components/SummonerSearch/SummonerSearch";
+import { SummonerForm } from "../../types/summonerDataTypes";
+import "./styles.css";
 
 const SummonerFormData: SummonerForm = {
   summonerData: undefined,
   summonerName: "",
   region: "euw1",
+  tier: "",
+  rank: "",
+  LP: 0,
   summonerWins: undefined,
   summonerLosses: undefined,
 };
@@ -30,7 +21,7 @@ const SummonerForm = () => {
   const { summonerData, summonerName, region, summonerWins, summonerLosses } =
     summonerState;
 
-  const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const response = await getSummonerData(summonerName, region);
@@ -48,6 +39,9 @@ const SummonerForm = () => {
       const response = await getRankedData(summonerData.id, region);
       setSummonerState((prevState) => ({
         ...prevState,
+        tier: response.tier,
+        rank: response.rank,
+        LP: response.LP,
         summonerWins: response.wins,
         summonerLosses: response.losses,
       }));
@@ -58,7 +52,7 @@ const SummonerForm = () => {
     if (summonerWins != undefined && summonerLosses != undefined) {
       const games = summonerWins + summonerLosses;
       const winPercentage = games ? Math.ceil((summonerWins / games) * 100) : 0;
-      return <>{winPercentage}%</>;
+      return winPercentage;
     }
   };
 
@@ -75,44 +69,33 @@ const SummonerForm = () => {
 
   useEffect(() => {
     getRankedStats();
-    console.log("fetched");
   }, [summonerData]);
 
   return (
-    <div>
-      <form onSubmit={(e) => handleSumbit(e)}>
-        <label htmlFor="SummonerName">Summoner Name</label>
-        <input
-          type="text"
-          name="summonerName"
-          placeholder="Summoner Name"
-          value={summonerName}
-          onChange={(e) => handleFormData(e)}
-        />
-        <button>Submit</button>
-        <select name="region" id="region" onChange={(e) => handleFormData(e)}>
-          <option value="euw1">EUW</option>
-          <option value="na1">NA</option>
-        </select>
-      </form>
-
+    <div className="container">
+      <SummonerSearch
+        handleSubmit={handleSubmit}
+        handleFormData={handleFormData}
+        summonerName={summonerName}
+      />
       {error ? (
-        <h1 style={{ color: "Red" }}>Summoner not found</h1>
+        <h1 className="error-message">Summoner not found</h1>
       ) : (
         summonerData && (
           <div>
-            <h1>
-              Summoner Name: {summonerData.name}
-              Level: {summonerData.summonerLevel}
-            </h1>
+            <h1 className="summoner-info">{summonerData.name}</h1>
             <img
               src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${summonerData.profileIconId}.png`}
               alt=""
             />
             {summonerWins != null && summonerLosses != null && (
-              <h1>
-                {summonerWins} - {summonerLosses} - {handleWinPercentage()}
-              </h1>
+              <div>
+                <h1>
+                  W: {summonerWins} - L: {summonerLosses} G:{" "}
+                  {summonerWins + summonerLosses} {handleWinPercentage()}%
+                </h1>
+                {summonerState.tier} {summonerState.rank} {summonerState.LP}
+              </div>
             )}
           </div>
         )
