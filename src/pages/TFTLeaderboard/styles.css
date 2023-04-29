@@ -1,0 +1,40 @@
+.table {
+  width: 100%;
+}
+
+.table-row {
+  text-align: center;
+}
+
+.table-row-rank {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rank-icon {
+  width: 64px;
+  height: 64px;
+}
+
+.table-row > :nth-child(2) {
+  font-size: 24px;
+}
+
+.region-selector {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.region-icon {
+  cursor: pointer;
+}
+
+.active {
+  background-color: cornflowerblue;
+  padding: 2px;
+  border-radius: 3px;
+}

@@ -42,7 +42,6 @@ const SummonerSearch = ({
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
-      <label htmlFor="summonerName">Summoner Name</label>
       <input
         type="text"
         name="summonerName"
@@ -50,7 +49,6 @@ const SummonerSearch = ({
         value={summonerName}
         onChange={(e) => handleFormData(e)}
       />
-      <label htmlFor="region">Region</label>
       <select name="region" id="region" onChange={(e) => handleFormData(e)}>
         {regionOptions}
       </select>
