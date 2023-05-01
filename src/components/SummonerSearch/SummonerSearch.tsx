@@ -1,6 +1,6 @@
 import React from "react";
 import { regions } from "../../data/data";
-import "./styles.css";
+import styles from "./styles.module.css";
 
 type SummonerFormData = {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -24,18 +24,23 @@ const SummonerSearch = ({
   ));
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
+    <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
       <input
+        className={styles.input}
         type="text"
         name="summonerName"
         placeholder="Summoner Name"
         value={summonerName}
         onChange={(e) => handleFormData(e)}
       />
-      <select name="region" id="region" onChange={(e) => handleFormData(e)}>
+      <select
+        className={styles.select}
+        name="region"
+        onChange={(e) => handleFormData(e)}
+      >
         {regionOptions}
       </select>
-      <button>Submit</button>
+      <button className={styles.button}>Submit</button>
     </form>
   );
 };

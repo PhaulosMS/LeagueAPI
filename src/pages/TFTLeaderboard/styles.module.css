@@ -1,27 +1,32 @@
+.container {
+  margin-top: 10px;
+  padding: 0 auto;
+}
+
 .table {
   width: 100%;
 }
 
-.table-row {
+.tableRow {
   text-align: center;
 }
 
-.table-row-rank {
+.tableRowRank {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.rank-icon {
+.rankIcon {
   width: 64px;
   height: 64px;
 }
 
-.table-row > :nth-child(2) {
+.tableRow > :nth-child(2) {
   font-size: 24px;
 }
 
-.region-selector {
+.regionSelector {
   display: flex;
   justify-content: center;
   gap: 60px;
@@ -29,7 +34,7 @@
   margin-bottom: 20px;
 }
 
-.region-icon {
+.regionIcon {
   cursor: pointer;
 }
 

@@ -2,20 +2,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 10px;
 }
 
-.error-message {
+.errorMessage {
   color: red;
   margin-top: 24px;
 }
 
-.summoner-info {
+.summonerInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 32px;
 }
 
-.summoner-info > h1 {
+.summonerInfo > h1 {
   margin-bottom: 8px;
 }
