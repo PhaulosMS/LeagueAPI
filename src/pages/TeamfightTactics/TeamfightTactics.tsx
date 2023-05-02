@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import SummonerSearch from "../../components/SummonerSearch/SummonerSearch";
 import { getSummonerData, getTFTRankedData } from "../../services";
 import { SummonerForm } from "../../types/summonerDataTypes";
+import styles from "./styles.module.css";
+import PlayerRank from "../../components/PlayerRank/PlayerRank";
 
 // can also maybe make this global type
 
@@ -72,34 +74,36 @@ const TeamfightTactics = () => {
   }, [summonerData]);
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <SummonerSearch
         handleSubmit={handleSubmit}
         handleFormData={handleFormData}
         summonerName={summonerName}
       />
       {error ? (
-        <h1 className="error-message">Summoner not found</h1>
+        <h1 className={styles.errorMessage}>Summoner not found</h1>
       ) : (
         summonerData && (
           <div>
-            <h1 className="summoner-info">{summonerData.name}</h1>
+            <h1 className={styles.summonerInfo}>{summonerData.name}</h1>
             <img
               src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${summonerData.profileIconId}.png`}
               alt=""
             />
-            {summonerWins != null && summonerLosses != null && (
-              <div>
-                <h1>
-                  W: {summonerWins} - L: {summonerLosses} G:{" "}
-                  {summonerWins + summonerLosses}
-                </h1>
-                {tier} {rank} {LP}
-              </div>
-            )}
           </div>
         )
       )}
+      <div>
+        {summonerData && summonerWins != 0 && summonerLosses != 0 && (
+          <PlayerRank
+            tier={tier}
+            rank={rank}
+            wins={summonerWins}
+            losses={summonerLosses}
+            LP={LP}
+          />
+        )}
+      </div>
     </div>
   );
 };

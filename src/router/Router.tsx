@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar/Navbar";
 import ErrorPageNotFound from "../pages/ErrorPageNotFound/ErrorPageNotFound";
 import TeamfightTactics from "../pages/TeamfightTactics/TeamfightTactics";
 import TFTLeaderboard from "../pages/TFTLeaderboard/TFTLeaderboard";
+import "./global.css";
 
 const Router = () => {
   return (

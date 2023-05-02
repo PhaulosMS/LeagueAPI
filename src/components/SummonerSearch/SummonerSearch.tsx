@@ -1,23 +1,6 @@
 import React from "react";
-import "./styles.css";
-
-const regions = {
-  EUW: "euw1",
-  NA: "na1",
-  EUNE: "eun1",
-  BR: "br1",
-  JP: "jp1",
-  LA: "la1",
-  KR: "kr",
-  OCE: "oc1",
-  PH: "ph2",
-  RU: "ru",
-  SG: "sg2",
-  TH: "th2",
-  TR: "tr1",
-  TW: "tw2",
-  VN: "vn2",
-};
+import { regions } from "../../data/data";
+import styles from "./styles.module.css";
 
 type SummonerFormData = {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -41,18 +24,23 @@ const SummonerSearch = ({
   ));
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
+    <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
       <input
+        className={styles.input}
         type="text"
         name="summonerName"
         placeholder="Summoner Name"
         value={summonerName}
         onChange={(e) => handleFormData(e)}
       />
-      <select name="region" id="region" onChange={(e) => handleFormData(e)}>
+      <select
+        className={styles.select}
+        name="region"
+        onChange={(e) => handleFormData(e)}
+      >
         {regionOptions}
       </select>
-      <button>Submit</button>
+      <button className={styles.button}>Submit</button>
     </form>
   );
 };

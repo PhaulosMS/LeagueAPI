@@ -1,7 +1,8 @@
 import { getTFTChallengerLeaderboard } from "../../services";
 import { useState, useEffect, useRef } from "react";
+import { regions } from "../../data/data";
 import ChallengerIcon from "../../images/ranks/TFT_Regalia_Challenger.png";
-import "./styles.css";
+import styles from "./styles.module.css";
 
 type LeaderboardResponse = {
   summonerName: string;
@@ -17,23 +18,7 @@ type Player = {
   summonerLosses: number;
 };
 
-const regions = {
-  EUW: "euw1",
-  NA: "na1",
-  EUNE: "eun1",
-  BR: "br1",
-  JP: "jp1",
-  LA: "la1",
-  KR: "kr",
-  OCE: "oc1",
-  PH: "ph2",
-  RU: "ru",
-  SG: "sg2",
-  TH: "th2",
-  TR: "tr1",
-  TW: "tw2",
-  VN: "vn2",
-};
+//TODO: Add links to summoners name
 
 const TFTLeaderboard = () => {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -55,7 +40,6 @@ const TFTLeaderboard = () => {
     playerData.sort((P1, P2) => P2.LP - P1.LP);
     setPlayers(playerData);
     setLoading(false);
-    console.log(players);
   };
 
   const sortPlayers = () => {
@@ -65,13 +49,13 @@ const TFTLeaderboard = () => {
         ? Math.ceil((player.summonerWins / games) * 100)
         : 0;
       return (
-        <tr className="table-row" key={player.summonerName}>
+        <tr className={styles.tableRow} key={player.summonerName}>
           <td>{index + 1}</td> <td>{player.summonerName}</td>{" "}
-          <td className="table-row-rank">
-            <img className="rank-icon" src={ChallengerIcon} alt=""></img>
+          <td className={styles.tableRowRank}>
+            <img className={styles.rankIcon} src={ChallengerIcon} alt=""></img>
             <span>Challenger</span>
           </td>
-          <td>{player.LP}</td> <td>{player.summonerWins}</td> <td>{games}</td>{" "}
+          <td>{player.LP}</td> <td>{player.summonerWins}</td> <td>{games}</td>
           <td>{winPercentage}</td>
         </tr>
       );
@@ -85,14 +69,25 @@ const TFTLeaderboard = () => {
 
   const regionSelector = Object.entries(regions).map(([region, regionID]) => (
     <div
-      className={`region-icon ${
-        regionID === regionRef.current ? "active" : ""
+      className={`${styles["regionIcon"]} ${
+        regionID === regionRef.current ? styles["active"] : ""
       }`}
       onClick={() => setRegionAndRegionRef(regionID)}
     >
       {region}
     </div>
   ));
+
+  //TODO: Top 5 like U.GG Leaderboards
+
+  // const sortTop5 = () => {
+  //   const myArray = players.slice(0, 5);
+  //   return myArray.map((player, index) => (
+  //     <div>
+  //       {index} {player.summonerName}
+  //     </div>
+  //   ));
+  // };
 
   useEffect(() => {
     getLeaderboard();
@@ -104,20 +99,22 @@ const TFTLeaderboard = () => {
       {loading ? (
         <h1>Loading... </h1>
       ) : (
-        <div>
-          <div className="region-selector">{regionSelector}</div>
-          <table className="table">
-            <tr>
-              <th>Rank</th>
-              <th>Name</th>
-              <th>Tier</th>
-              <th>LP</th>
-              <th>TOP 4</th>
-              <th>Played</th>
-              <th>Win %</th>
-            </tr>
-            {sortPlayers()}
-          </table>
+        <div className={styles.container}>
+          <div className={styles.regionSelector}>{regionSelector}</div>
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Tier</th>
+                <th>LP</th>
+                <th>TOP 4</th>
+                <th>Played</th>
+                <th>Win %</th>
+              </tr>
+              {sortPlayers()}
+            </table>
+          </div>
         </div>
       )}
     </div>

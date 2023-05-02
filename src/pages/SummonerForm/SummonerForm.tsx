@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { getRankedData, getSummonerData } from "../../services/index";
 import SummonerSearch from "../../components/SummonerSearch/SummonerSearch";
 import { SummonerForm } from "../../types/summonerDataTypes";
-import "./styles.css";
 
 const SummonerFormData: SummonerForm = {
   summonerData: undefined,
