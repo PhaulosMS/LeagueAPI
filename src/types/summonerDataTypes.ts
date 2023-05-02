@@ -1,6 +1,7 @@
 export type SummonerData = {
   name: string;
   id: number;
+  puuid: number;
   summonerLevel: number;
   profileIconId: number;
 };

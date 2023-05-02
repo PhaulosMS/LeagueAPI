@@ -4,6 +4,7 @@ import { getSummonerData, getTFTRankedData } from "../../services";
 import { SummonerForm } from "../../types/summonerDataTypes";
 import styles from "./styles.module.css";
 import PlayerRank from "../../components/PlayerRank/PlayerRank";
+import MatchHistory from "../../components/MatchHistory/MatchHistory";
 
 // can also maybe make this global type
 
@@ -104,6 +105,7 @@ const TeamfightTactics = () => {
           />
         )}
       </div>
+      <MatchHistory />
     </div>
   );
 };
