@@ -55,7 +55,7 @@ const TFTLeaderboard = () => {
             <img className={styles.rankIcon} src={ChallengerIcon} alt=""></img>
             <span>Challenger</span>
           </td>
-          <td>{player.LP}</td> <td>{player.summonerWins}</td> <td>{games}</td>{" "}
+          <td>{player.LP}</td> <td>{player.summonerWins}</td> <td>{games}</td>
           <td>{winPercentage}</td>
         </tr>
       );

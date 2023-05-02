@@ -15,7 +15,6 @@ const Navbar = () => {
         <Link to="/tft">Teamfight Tactics</Link>
         {/* <Link to="/lor">Legends of Runterra</Link> */}
         <Link to="/leaderboard">TFT Challenger Leaderboard</Link>
-        <Link to="/playerRank">PlayerRankTest</Link>
       </div>
     </nav>
   );
