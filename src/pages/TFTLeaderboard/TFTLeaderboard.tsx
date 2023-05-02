@@ -18,6 +18,8 @@ type Player = {
   summonerLosses: number;
 };
 
+//TODO: Add links to summoners name
+
 const TFTLeaderboard = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,7 +40,6 @@ const TFTLeaderboard = () => {
     playerData.sort((P1, P2) => P2.LP - P1.LP);
     setPlayers(playerData);
     setLoading(false);
-    console.log(players);
   };
 
   const sortPlayers = () => {
@@ -77,32 +78,43 @@ const TFTLeaderboard = () => {
     </div>
   ));
 
+  //TODO: Top 5 like U.GG Leaderboards
+
+  // const sortTop5 = () => {
+  //   const myArray = players.slice(0, 5);
+  //   return myArray.map((player, index) => (
+  //     <div>
+  //       {index} {player.summonerName}
+  //     </div>
+  //   ));
+  // };
+
   useEffect(() => {
     getLeaderboard();
     console.log("fetched");
   }, [region]);
 
-  console.log(players, "players  xdddd");
-
   return (
-    <div className={styles.container}>
+    <div>
       {loading ? (
         <h1>Loading... </h1>
       ) : (
-        <div>
+        <div className={styles.container}>
           <div className={styles.regionSelector}>{regionSelector}</div>
-          <table className={styles.table}>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Tier</th>
-              <th>LP</th>
-              <th>TOP 4</th>
-              <th>Played</th>
-              <th>Win %</th>
-            </tr>
-            {sortPlayers()}
-          </table>
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Tier</th>
+                <th>LP</th>
+                <th>TOP 4</th>
+                <th>Played</th>
+                <th>Win %</th>
+              </tr>
+              {sortPlayers()}
+            </table>
+          </div>
         </div>
       )}
     </div>

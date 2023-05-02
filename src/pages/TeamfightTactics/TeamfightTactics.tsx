@@ -69,7 +69,7 @@ const TeamfightTactics = () => {
   };
 
   useEffect(() => {
-    // getTFTRankedStats();
+    getTFTRankedStats();
   }, [summonerData]);
 
   return (
@@ -98,7 +98,6 @@ const TeamfightTactics = () => {
                 {tier} {rank} {LP}
               </div>
             )}
-            <button onClick={getTFTRankedStats}>Get Stats</button>
           </div>
         )
       )}

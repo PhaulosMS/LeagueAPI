@@ -6,6 +6,7 @@ import ErrorPageNotFound from "../pages/ErrorPageNotFound/ErrorPageNotFound";
 import TeamfightTactics from "../pages/TeamfightTactics/TeamfightTactics";
 import TFTLeaderboard from "../pages/TFTLeaderboard/TFTLeaderboard";
 import "./global.css";
+import PlayerRank from "../components/PlayerRank/PlayerRank";
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
         <Route path="/SummonerForm" element={<SummonerForm />} />
         <Route path="/tft" element={<TeamfightTactics />} />
         <Route path="/leaderboard" element={<TFTLeaderboard />} />
+        <Route path="/playerRank" element={<PlayerRank />} />
         <Route path="*" element={<ErrorPageNotFound />} />
       </Routes>
     </BrowserRouter>

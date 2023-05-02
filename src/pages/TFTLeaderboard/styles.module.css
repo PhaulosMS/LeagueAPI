@@ -1,14 +1,29 @@
 .container {
   margin-top: 10px;
   padding: 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.tableContainer {
+  margin: 0 250px;
 }
 
 .table {
   width: 100%;
 }
 
+.table > :first-child {
+  background-color: rgb(40 40 48);
+}
+
+table > tr {
+  background-color: rgb(40 40 48, 70%);
+}
+
 .tableRow {
   text-align: center;
+  background-color: rgb(57, 56, 56);
 }
 
 .tableRowRank {
@@ -31,7 +46,7 @@
   justify-content: center;
   gap: 60px;
   max-width: 100%;
-  margin-bottom: 20px;
+  margin: 15px 0px;
 }
 
 .regionIcon {
@@ -40,6 +55,16 @@
 
 .active {
   background-color: cornflowerblue;
-  padding: 2px;
+  padding: 4px;
   border-radius: 3px;
+  transform: scale(1.2);
+}
+
+.topFive {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.topFive > :first-child {
+  grid-column: 1 / span 4;
 }
