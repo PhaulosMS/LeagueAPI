@@ -12,6 +12,7 @@ type LeaderboardResponse = {
 };
 
 type Player = {
+  key: number;
   summonerName: string;
   LP: number;
   summonerWins: number;
@@ -50,12 +51,15 @@ const TFTLeaderboard = () => {
         : 0;
       return (
         <tr className={styles.tableRow} key={player.summonerName}>
-          <td>{index + 1}</td> <td>{player.summonerName}</td>{" "}
+          <td>{index + 1}</td>
+          <td>{player.summonerName}</td>
           <td className={styles.tableRowRank}>
             <img className={styles.rankIcon} src={ChallengerIcon} alt=""></img>
             <span>Challenger</span>
           </td>
-          <td>{player.LP}</td> <td>{player.summonerWins}</td> <td>{games}</td>
+          <td>{player.LP}</td>
+          <td>{player.summonerWins}</td>
+          <td>{games}</td>
           <td>{winPercentage}</td>
         </tr>
       );
@@ -69,6 +73,7 @@ const TFTLeaderboard = () => {
 
   const regionSelector = Object.entries(regions).map(([region, regionID]) => (
     <div
+      key={regionID}
       className={`${styles["regionIcon"]} ${
         regionID === regionRef.current ? styles["active"] : ""
       }`}
@@ -97,22 +102,24 @@ const TFTLeaderboard = () => {
   return (
     <div>
       {loading ? (
-        <h1>Loading... </h1>
+        <h1>Loading...</h1>
       ) : (
         <div className={styles.container}>
           <div className={styles.regionSelector}>{regionSelector}</div>
           <div className={styles.tableContainer}>
             <table className={styles.table}>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Tier</th>
-                <th>LP</th>
-                <th>TOP 4</th>
-                <th>Played</th>
-                <th>Win %</th>
-              </tr>
-              {sortPlayers()}
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Tier</th>
+                  <th>LP</th>
+                  <th>TOP4</th>
+                  <th>Played</th>
+                  <th>Win%</th>
+                </tr>
+              </thead>
+              <tbody>{sortPlayers()}</tbody>
             </table>
           </div>
         </div>

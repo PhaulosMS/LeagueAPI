@@ -60,3 +60,11 @@ export const getTFTChallengerLeaderboard = async (region: string) => {
   const response = await axios.get(URL_TFT_CHALLENGER_LEADERBOARD);
   return response.data.entries;
 };
+
+export const getMatchHistory = async () => {
+  const data = await getSummonerData("bernard the dog", "euw1");
+  const puuid = data.puuid;
+  const URL = `https://europe.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${API_KEY}`;
+  const response = await axios.get(URL);
+  return response.data;
+};

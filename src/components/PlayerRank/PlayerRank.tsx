@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { RankIcons } from "../../data/data";
+import defaultIcon from "../../images/ranks/TFT_Regalia_Provisional.png";
 
 import styles from "./styles.module.css";
 
@@ -35,8 +36,7 @@ const PlayerRank = ({
         return RankIcons[rank];
       }
     }
-    // Return a default icon URL if no match was found
-    return "../images/ranks/TFT_Regalia_Provisional.png";
+    return defaultIcon;
   };
 
   const StatItem = ({
@@ -63,7 +63,7 @@ const PlayerRank = ({
         <img className={styles.img} src={getRankIconUrl(tier)} alt="" />
         <div>
           <div className={styles.text}>Tier</div>
-          <span className={styles.textTier}>{tier.toLocaleLowerCase()}</span>
+          <span className={styles.textTier}>{tier.toLocaleLowerCase()} </span>
           <span className={styles.text}>{rank} </span>
           {unranked !== false && <span className={styles.text}>{LP} LP</span>}
         </div>
