@@ -13,12 +13,12 @@ body {
     color: white;
 }
 
-.regionIcon {
-    cursor: pointer;
-}
-
 @layer components {
     .regionIcon {
         @apply cursor-pointer
+    }
+
+    .active {
+        @apply bg-blue-600 scale-110 p-2 rounded
     }
 }

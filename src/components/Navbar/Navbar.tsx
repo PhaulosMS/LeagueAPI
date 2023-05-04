@@ -3,7 +3,7 @@ import Logo from "../../images/rift.gg-1-edited.png";
 
 const Navbar = () => {
   return (
-    <nav className="flex bg-[#1c1c1e] justify-evenly mb-0 py-5 px-0">
+    <nav className="flex bg-[#1c1c1e] justify-evenly py-6 ">
       <div>
         <Link to="/">
           <img className="w-36 h-full" src={Logo} alt="" />

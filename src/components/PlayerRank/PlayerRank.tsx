@@ -44,9 +44,9 @@ const PlayerRank = ({
     left: string;
     right: string | number;
   }) => (
-    <div>
-      <span>{left}</span>
-      <span>{right}</span>
+    <div className="flex justify-between">
+      <span className="text-left">{left}</span>
+      <span className="text-right">{right}</span>
     </div>
   );
 
@@ -57,16 +57,18 @@ const PlayerRank = ({
 
   return (
     <div>
-      <div>
-        <img src={getRankIconUrl(tier)} alt="" />
+      <div className="flex items-center p-5">
+        <img className="w-24 mr-3" src={getRankIconUrl(tier)} alt="" />
         <div>
-          <div>Tier</div>
-          <span>{tier.toLocaleLowerCase()} </span>
+          <div className="text-xl">Tier</div>
+          <span className=" text-xl capitalize">
+            {tier.toLocaleLowerCase()}
+          </span>
           <span>{rank} </span>
-          {unranked !== false && <span>{LP} LP</span>}
+          {unranked !== false && <span className="text-xl">{LP} LP</span>}
         </div>
       </div>
-      <div>
+      <div className=" grid grid-cols-2 gap-3 p-3">
         <StatItem left="Wins:" right={wins} />
         <StatItem left="Win Rate:" right={`${calculateStats().winRate}%`} />
         <StatItem left="Top 4:" right={wins} />

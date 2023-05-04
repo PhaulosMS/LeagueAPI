@@ -73,9 +73,7 @@ const TFTLeaderboard = () => {
   const regionSelector = Object.entries(regions).map(([region, regionID]) => (
     <div
       key={regionID}
-      className={`$["regionIcon"]} ${
-        regionID === regionRef.current ? ["active"] : ""
-      }`}
+      className={`regionIcon ${regionID === regionRef.current ? "active" : ""}`}
       onClick={() => setRegionAndRegionRef(regionID)}
     >
       {region}
@@ -103,11 +101,11 @@ const TFTLeaderboard = () => {
       {loading ? (
         <h1>Loading...</h1>
       ) : (
-        <div className="mt">
+        <div className="">
           <div className="flex justify-center gap-14 max-w-full mx-0 my-3">
             {regionSelector}
           </div>
-          <div className="mx-44 my-0 ">
+          <div className="mx-32 my-0 ">
             <table className="w-full">
               <thead>
                 <tr className="bg-[#292930]">
