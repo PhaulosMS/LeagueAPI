@@ -60,12 +60,3 @@ table > tr {
   border-radius: 3px;
   transform: scale(1.2);
 }
-
-.topFive {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.topFive > :first-child {
-  grid-column: 1 / span 4;
-}

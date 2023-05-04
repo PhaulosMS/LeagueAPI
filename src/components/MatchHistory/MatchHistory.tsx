@@ -1,20 +1,71 @@
 import { useEffect, useState } from "react";
-import { getMatchHistory } from "../../services";
+import { getMatch, getMatchHistoryData } from "../../services";
+import MatchHistoryBlock from "./MatchHistoryBlock";
 
-//TODO FIX, match history is magic variables, need switch case to determine what routing region also
+type MatchInfo = {
+  matchId: string;
+  data: any;
+};
 
-const MatchHistory = () => {
-  const [puuid, setPuuid] = useState<number>();
-  const getMatchHistoryData = async () => {
-    const response = await getMatchHistory();
-    console.log(response, "history?");
+// data.info.
+// data.info.partcipants etc
+
+const MatchHistory = ({
+  summonerName,
+  region,
+}: {
+  summonerName: string;
+  region: string;
+}) => {
+  const [matches, setMatches] = useState([]);
+  const [matchInfo, setMatchInfo] = useState<MatchInfo[]>([]);
+  const getMatchHistoryIDs = async () => {
+    const response = await getMatchHistoryData(summonerName, region);
+    setMatches(response);
+  };
+
+  const getMatchesInfo = async () => {
+    if (matches) {
+      const response = await Promise.all(
+        matches.map(async (match) => {
+          const data = await getMatch(match, region);
+          return { matchId: match, data };
+        })
+      );
+      setMatchInfo(response);
+      console.log(matchInfo, "matchinfo");
+    }
+  };
+
+  const sortMatchInfo = () => {
+    if (matchInfo) {
+      return matchInfo.map((match) => {
+        return (
+          <MatchHistoryBlock
+            key={match.matchId} /*{match.data.info.tft_game_type}*/
+          />
+        );
+      });
+    }
+    return <h1>nothing found</h1>;
   };
 
   useEffect(() => {
-    getMatchHistoryData();
-  }, []);
+    getMatchesInfo();
+  }, [matches]);
 
-  return <div>MatchHistory</div>;
+  return (
+    <div>
+      <h1>Match History</h1>
+      <button
+        className="bg-green-700 py-3 rounded px-3"
+        onClick={() => getMatchHistoryIDs()}
+      >
+        getMatchHistoryData
+      </button>
+      <div>{sortMatchInfo()}</div>
+    </div>
+  );
 };
 
 export default MatchHistory;

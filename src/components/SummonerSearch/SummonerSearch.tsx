@@ -1,6 +1,5 @@
 import React from "react";
 import { regions } from "../../data/data";
-import styles from "./styles.module.css";
 
 type SummonerFormData = {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -24,9 +23,12 @@ const SummonerSearch = ({
   ));
 
   return (
-    <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+    <form
+      className="flex flex-col w-full max-w-md"
+      onSubmit={(e) => handleSubmit(e)}
+    >
       <input
-        className={styles.input}
+        className="text-black p-2 mb-2 border-solid border-gray-500 rounded"
         type="text"
         name="summonerName"
         placeholder="Summoner Name"
@@ -34,13 +36,13 @@ const SummonerSearch = ({
         onChange={(e) => handleFormData(e)}
       />
       <select
-        className={styles.select}
+        className="text-black p-2 mb-2 border-solid border-gray-500 rounded"
         name="region"
         onChange={(e) => handleFormData(e)}
       >
         {regionOptions}
       </select>
-      <button className={styles.button}>Submit</button>
+      <button className="bg-green-700 py-3 rounded">Submit</button>
     </form>
   );
 };

@@ -105,7 +105,9 @@ const TeamfightTactics = () => {
           />
         )}
       </div>
-      <MatchHistory />
+      {summonerData && (
+        <MatchHistory summonerName={summonerData.name} region={region} />
+      )}
     </div>
   );
 };
