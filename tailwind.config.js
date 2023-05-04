@@ -11,9 +11,3 @@ export default {
     plugins: [],
   },
 };
-
-// //  traitBackground: {
-//   //bronze: bronzeTrait,
-//   silver: silverTrait,
-//   gold: goldTrait,
-//   prismatic: prismaticTrait,

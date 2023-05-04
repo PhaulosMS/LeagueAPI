@@ -1,20 +1,25 @@
 import { Link } from "react-router-dom";
 import Logo from "../../images/rift.gg-1-edited.png";
-import styles from "./styles.module.css";
 
 const Navbar = () => {
   return (
-    <nav className={styles.navbar}>
+    <nav className="flex bg-[#1c1c1e] justify-evenly mb-0 py-5 px-0">
       <div>
         <Link to="/">
-          <img src={Logo} alt="" />
+          <img className="w-36 h-full" src={Logo} alt="" />
         </Link>
       </div>
-      <div className={styles.navbarItems}>
-        <Link to="/SummonerForm">League of Legends</Link>
-        <Link to="/tft">Teamfight Tactics</Link>
+      <div className="flex flex-1 font-bold justify-evenly">
+        <Link className="text-white no-underline my-0 mx-3" to="/SummonerForm">
+          League of Legends
+        </Link>
+        <Link className="text-white no-underline my-0 mx-3" to="/tft">
+          Teamfight Tactics
+        </Link>
         {/* <Link to="/lor">Legends of Runterra</Link> */}
-        <Link to="/leaderboard">TFT Challenger Leaderboard</Link>
+        <Link className="text-white no-underline my-0 mx-3" to="/leaderboard">
+          TFT Challenger Leaderboard
+        </Link>
       </div>
     </nav>
   );

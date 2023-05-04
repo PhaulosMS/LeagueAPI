@@ -7,7 +7,7 @@
 
 .tableContainer {
   margin: 0 250px;
-  background-color: rgb(72, 72, 73);
+  background-color: #484849;
 }
 
 .table {
@@ -15,7 +15,7 @@
 }
 
 .table > :first-child {
-  background-color: rgb(40 40 48);
+  background-color: #292930
 }
 
 table > tr {
@@ -24,7 +24,7 @@ table > tr {
 
 .tableRow {
   text-align: center;
-  background-color: rgb(57, 56, 56);
+  background-color: #393838;
 }
 
 .tableRowRank {

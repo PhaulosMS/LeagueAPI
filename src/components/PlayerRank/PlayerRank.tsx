@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { RankIcons } from "../../data/data";
 import defaultIcon from "../../images/ranks/TFT_Regalia_Provisional.png";
 
-import styles from "./styles.module.css";
-
 //TODO handle more of the error checking, player is purely unranked 0 games,
 // or just unranked cause of not hitting placements
 
@@ -46,9 +44,9 @@ const PlayerRank = ({
     left: string;
     right: string | number;
   }) => (
-    <div className={styles.gridItem}>
-      <span className={styles.gridItemLeft}>{left}</span>
-      <span className={styles.gridItemRight}>{right}</span>
+    <div>
+      <span>{left}</span>
+      <span>{right}</span>
     </div>
   );
 
@@ -58,17 +56,17 @@ const PlayerRank = ({
   }, [tier]);
 
   return (
-    <div className={styles.profileSummary}>
-      <div className={styles.tierSummary}>
-        <img className={styles.img} src={getRankIconUrl(tier)} alt="" />
+    <div>
+      <div>
+        <img src={getRankIconUrl(tier)} alt="" />
         <div>
-          <div className={styles.text}>Tier</div>
-          <span className={styles.textTier}>{tier.toLocaleLowerCase()} </span>
-          <span className={styles.text}>{rank} </span>
-          {unranked !== false && <span className={styles.text}>{LP} LP</span>}
+          <div>Tier</div>
+          <span>{tier.toLocaleLowerCase()} </span>
+          <span>{rank} </span>
+          {unranked !== false && <span>{LP} LP</span>}
         </div>
       </div>
-      <div className={styles.profileStats}>
+      <div>
         <StatItem left="Wins:" right={wins} />
         <StatItem left="Win Rate:" right={`${calculateStats().winRate}%`} />
         <StatItem left="Top 4:" right={wins} />
