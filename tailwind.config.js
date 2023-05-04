@@ -1,4 +1,3 @@
-import bronzeTrait from "./src/images/traits/Hexagons/bronze.svg";
 import silverTrait from "./src/image/traits/Hexagons/silver.svg";
 import goldTrait from "./src/images/traits/Hexagons/gold.svg";
 import prismaticTrait from "./src/images/traits/Hexagons/chromatic.svg";
