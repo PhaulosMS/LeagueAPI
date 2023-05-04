@@ -60,12 +60,12 @@ const PlayerRank = ({
       <div className="flex items-center p-5">
         <img className="w-24 mr-3" src={getRankIconUrl(tier)} alt="" />
         <div>
-          <div className="text-xl">Tier</div>
-          <span className=" text-xl capitalize">
+          <div className="text-2xl">Tier</div>
+          <span className=" text-2xl capitalize">
             {tier.toLocaleLowerCase()}
           </span>
-          <span>{rank} </span>
-          {unranked !== false && <span className="text-xl">{LP} LP</span>}
+          <span className="text-2xl"> {rank} </span>
+          {unranked !== false && <span className="text-2xl"> {LP} LP</span>}
         </div>
       </div>
       <div className=" grid grid-cols-2 gap-3 p-3">
