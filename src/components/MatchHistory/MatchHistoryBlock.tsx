@@ -84,11 +84,13 @@ const MatchHistoryBlock = ({
   const Champion = ({ character_id }: any) => {
     let dataImageURL;
     if (dataChamps && dataChamps[character_id])
-      dataImageURL = dataChamps[character_id].image.full;
+      dataImageURL = dataChamps[character_id]["image"]["full"];
     return (
       <div className="border-4 border-blue-700 rounded-md overflow-hidden">
         <img
-          src={`src/images/augments/hero/${dataImageURL}`}
+          src={`src/images/augments/hero/${
+            dataImageURL ? dataImageURL : "TFT8_Zac.png"
+          }`}
           alt=""
           className="w-10"
         />
