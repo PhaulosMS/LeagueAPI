@@ -49,7 +49,10 @@ const TFTLeaderboard = () => {
         ? Math.ceil((player.summonerWins / games) * 100)
         : 0;
       return (
-        <tr key={player.summonerName} className="text-center bg-[#393838]">
+        <tr
+          key={player.summonerName}
+          className="text-center bg-[#393838] border border-gray-700"
+        >
           <td>{index + 1}</td>
           <td>{player.summonerName}</td>
           <td className="flex justify-center items-center">

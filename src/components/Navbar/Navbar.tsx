@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Logo from "../../images/rift.gg-1-edited.png";
+import Logo from "../../images/bg/rift.gg-1-edited.png";
 
 const Navbar = () => {
   return (
@@ -9,14 +9,13 @@ const Navbar = () => {
           <img className="w-36 h-full" src={Logo} alt="" />
         </Link>
       </div>
-      <div className="flex flex-1 font-bold justify-evenly">
+      <div className="flex flex-1 font-bold justify-evenly items-center">
         <Link className="text-white no-underline my-0 mx-3" to="/SummonerForm">
           League of Legends
         </Link>
         <Link className="text-white no-underline my-0 mx-3" to="/tft">
           Teamfight Tactics
         </Link>
-        {/* <Link to="/lor">Legends of Runterra</Link> */}
         <Link className="text-white no-underline my-0 mx-3" to="/leaderboard">
           TFT Challenger Leaderboard
         </Link>

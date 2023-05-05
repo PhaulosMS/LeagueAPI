@@ -52,12 +52,11 @@ const PlayerRank = ({
 
   useEffect(() => {
     setUnranked(tier !== "unranked" ? true : false);
-    console.log(tier, unranked);
   }, [tier]);
 
   return (
-    <div>
-      <div className="flex items-center p-5">
+    <div className="bg-[#31313b] rounded-md border border-black">
+      <div className="flex items-center p-2 border-b   border-black ">
         <img className="w-24 mr-3" src={getRankIconUrl(tier)} alt="" />
         <div>
           <div className="text-2xl">Tier</div>

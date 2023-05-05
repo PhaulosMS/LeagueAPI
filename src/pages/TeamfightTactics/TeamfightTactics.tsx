@@ -105,7 +105,7 @@ const TeamfightTactics = () => {
         )}
       </div>
       {summonerData && (
-        <MatchHistory summonerName={summonerData.name} region={region} />
+        <MatchHistory summonerName={summonerData.name} region={region} puuid={summonerData.puuid} />
       )}
     </div>
   );

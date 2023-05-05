@@ -67,7 +67,7 @@ export const getMatchHistoryData = async (
 ) => {
   const data = await getSummonerData(summonerName, region);
   const puuid = data.puuid;
-  const URL = `https://europe.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=5&api_key=${API_KEY}`;
+  const URL = `https://europe.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=4&api_key=${API_KEY}`;
   const response = await axios.get(URL);
   return response.data;
 };

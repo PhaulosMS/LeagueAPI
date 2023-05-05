@@ -13,11 +13,25 @@ body {
     color: white;
 }
 
+.tft-hexagon-bronze {
+    background-image: url("../images/traits/Hexagons/bronze.svg");
+
+}
+
+.tft-hexagon-silver {
+    background-image: url("../images/traits/Hexagons/silver.svg");
+
+}
+
 .tft-hexagon-gold {
-    background-image: url("../images/traits/Hexagons/gold.svg");}
+    background-image: url("../images/traits/Hexagons/gold.svg");
+}
+
+.tft-hexagon-prismatic {
+    background-image: url("../images/traits/Hexagons/chromatic.svg");
+
+}
     
-
-
 @layer components {
     .regionIcon {
         @apply cursor-pointer
