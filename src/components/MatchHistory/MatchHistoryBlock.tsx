@@ -63,7 +63,7 @@ const MatchHistoryBlock = ({
       dataImageURL = dataAugments[augment_id]["image"]["full"];
     }
     const HeroColours = () => {
-      if (augment_id.includes("Carry"))
+      if (augment_id.includes("Carry") || augment_id.includes("Glitch"))
         return "border-purple-700 border-2 rounded-sm overflow-hidden";
       else if (augment_id.includes("Support"))
         return "border-green-700 border-2 rounded-sm overflow-hidden";
@@ -80,7 +80,7 @@ const MatchHistoryBlock = ({
     return (
       <div className={HeroColours()}>
         <img
-          src={`src/images/augments/${
+          src={`augments/${
             dataImageURL == "" ? `hero/${augment_id_manipulated}` : dataImageURL
           }`}
           alt=""
@@ -115,11 +115,7 @@ const MatchHistoryBlock = ({
       <div
         className={`tft-hexagon-${hexagonColor} h-6 w-6 bg-no-repeat flex items-center justify-center`}
       >
-        <img
-          className="h-4 w-4"
-          src={`src/images/traits/${dataImageURL}`}
-          alt=""
-        />
+        <img className="h-4 w-4" src={`/TraitIcons/${dataImageURL}`} alt="" />
       </div>
     );
   };
@@ -159,9 +155,7 @@ const MatchHistoryBlock = ({
         className={`border-4 border-${borderColour}-600 rounded-md overflow-hidden`}
       >
         <img
-          src={`src/images/augments/hero/${
-            dataImageURL ? dataImageURL : "TFT8_Zac.png"
-          }`}
+          src={`/augments/hero/${dataImageURL ? dataImageURL : "TFT8_Zac.png"}`}
           alt=""
           className="w-10"
         />
@@ -194,11 +188,9 @@ const MatchHistoryBlock = ({
       dataTactician &&
       dataTactician[Tactician.item_ID].id == Tactician.item_ID
     ) {
-      return `src/images/tacticians/${
-        dataTactician[Tactician.item_ID]["image"]["full"]
-      }`;
+      return `/tacticians/${dataTactician[Tactician.item_ID]["image"]["full"]}`;
     }
-    return "src/images/tacticians/Tooltip_TFT_Avatar_Blue.png";
+    return "../src/images/tacticians/Tooltip_TFT_Avatar_Blue.png";
   };
 
   const getTactician = async () => {
@@ -259,11 +251,10 @@ const MatchHistoryBlock = ({
           </div>
           <div className="flex ml-2">{sortTraits()}</div>
         </div>
-        <div className="flex items-center">
-          <div className="flex flex-col m-4 gap-1">{sortAugments()}</div>
-
+        <div className="flex items-center flex-grow ">
+          <div className="flex flex-col m-4 gap-1 ">{sortAugments()}</div>
           <div className="flex gap-2">{sortUnits()}</div>
-          <div className="ml-3 ">
+          <div className="ml-3">
             <div className="flex items-center">
               <h1>{RGold}</h1>
               <img src={Gold} alt="" className="w-4 h-4 " />

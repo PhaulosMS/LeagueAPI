@@ -21,7 +21,7 @@ type PlayerGameInfoType = {
   tactician: any;
 };
 
-let PlayerGameInfo: PlayerGameInfoType[] = [];
+const PlayerGameInfo: PlayerGameInfoType[] = [];
 
 const MatchHistory = ({
   summonerName,
@@ -34,6 +34,8 @@ const MatchHistory = ({
 }) => {
   const [matches, setMatches] = useState([]);
   const [matchInfo, setMatchInfo] = useState<MatchInfo[]>([]);
+  const [playerGameInfo, setPlayerGameInfo] =
+    useState<PlayerGameInfoType[]>(PlayerGameInfo);
   const getMatchHistoryIDs = async () => {
     const response = await getMatchHistoryData(summonerName, region);
     setMatches(response);
@@ -52,8 +54,8 @@ const MatchHistory = ({
   };
 
   const sortMatchInfo = () => {
-    if (PlayerGameInfo) {
-      return PlayerGameInfo.map((match) => {
+    if (playerGameInfo) {
+      return playerGameInfo.map((match) => {
         return (
           <MatchHistoryBlock
             key={match.matchId}
@@ -73,8 +75,7 @@ const MatchHistory = ({
     }
     return <h1>nothing found</h1>;
   };
-  // if playergamedatainfo has same match id lets not push the tempplayergameinfo if it does then can push
-  // Grabs the index of the current player searched and grabs the info and store it in an array object
+
   const getPlayerData = async () => {
     const tempPlayerGameInfo: any[] = [];
 
@@ -86,7 +87,7 @@ const MatchHistory = ({
         }
       }
     }
-    PlayerGameInfo = tempPlayerGameInfo;
+    setPlayerGameInfo(tempPlayerGameInfo);
   };
 
   const getPlayerGameInfo = (index: number, match: any) => {
@@ -107,6 +108,7 @@ const MatchHistory = ({
   };
 
   useEffect(() => {
+    getMatchHistoryIDs();
     getMatchesInfo();
     getPlayerData();
   }, [matches]);
@@ -114,7 +116,7 @@ const MatchHistory = ({
   return (
     <div>
       <button
-        className="bg-green-700 py-3 rounded px-3"
+        className="bg-green-700 p-3 rounded-md"
         onClick={() => getMatchHistoryIDs()}
       >
         getMatchHistoryData

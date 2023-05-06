@@ -14,8 +14,13 @@ type SummonerStats = {
 
 export const getSummonerData = async (summonerName: string, region: string) => {
   const URL = `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${API_KEY}`;
+  const config = {
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+  };
   try {
-    const response = await axios.get(URL);
+    const response = await axios.get(URL, config);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -25,8 +30,13 @@ export const getSummonerData = async (summonerName: string, region: string) => {
 
 export const getRankedData = async (summonerId: number, region: string) => {
   const URL_RANKED_WINS = `https://${region}.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}?api_key=${API_KEY}`;
+  const config = {
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+  };
 
-  const response = await axios.get(URL_RANKED_WINS);
+  const response = await axios.get(URL_RANKED_WINS, config);
 
   const Stats: SummonerStats = {
     wins: response.data[0]?.wins,
@@ -42,7 +52,12 @@ export const getRankedData = async (summonerId: number, region: string) => {
 
 export const getTFTRankedData = async (summonerId: number, region: string) => {
   const URL_TFT_RANKED_STATS = `https://${region}.api.riotgames.com/tft/league/v1/entries/by-summoner/${summonerId}?api_key=${API_KEY}`;
-  const response = await axios.get(URL_TFT_RANKED_STATS);
+  const config = {
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+  };
+  const response = await axios.get(URL_TFT_RANKED_STATS, config);
 
   const Stats: SummonerStats = {
     wins: response.data[0]?.wins,
@@ -56,8 +71,13 @@ export const getTFTRankedData = async (summonerId: number, region: string) => {
 
 export const getTFTChallengerLeaderboard = async (region: string) => {
   const URL_TFT_CHALLENGER_LEADERBOARD = `https://${region}.api.riotgames.com/tft/league/v1/challenger?api_key=${API_KEY}`;
+  const config = {
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+  };
 
-  const response = await axios.get(URL_TFT_CHALLENGER_LEADERBOARD);
+  const response = await axios.get(URL_TFT_CHALLENGER_LEADERBOARD, config);
   return response.data.entries;
 };
 
@@ -67,8 +87,13 @@ export const getMatchHistoryData = async (
 ) => {
   const data = await getSummonerData(summonerName, region);
   const puuid = data.puuid;
-  const URL = `https://europe.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${API_KEY}`;
-  const response = await axios.get(URL);
+  const URL = `https://europe.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=2&api_key=${API_KEY}`;
+  const config = {
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+  };
+  const response = await axios.get(URL, config);
   return response.data;
 };
 
@@ -98,6 +123,11 @@ export const getMatch = async (matchID: string, region: string) => {
   }
 
   const URL = `https://${RoutingRegion}.api.riotgames.com/tft/match/v1/matches/${matchID}?api_key=${API_KEY}`;
-  const response = await axios.get(URL);
+  const config = {
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    },
+  };
+  const response = await axios.get(URL, config);
   return response.data;
 };

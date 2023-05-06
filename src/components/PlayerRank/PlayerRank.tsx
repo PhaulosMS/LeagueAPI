@@ -68,12 +68,10 @@ const PlayerRank = ({
         </div>
       </div>
       <div className=" grid grid-cols-2 gap-3 p-3">
-        <StatItem left="Wins:" right={wins} />
-        <StatItem left="Win Rate:" right={`${calculateStats().winRate}%`} />
         <StatItem left="Top 4:" right={wins} />
         <StatItem left="Top 4 Rate:" right={`${calculateStats().winRate}%`} />
+        <StatItem left="Bottom 4" right={losses} />
         <StatItem left="Played:" right={calculateStats().played} />
-        <StatItem left="Average:" right={1.0} />
       </div>
     </div>
   );
