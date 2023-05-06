@@ -18,7 +18,7 @@ type PlayerGameInfoType = {
   units: any;
   length: number;
   mode: number;
-  tactician: string;
+  tactician: any;
 };
 
 let PlayerGameInfo: PlayerGameInfoType[] = [];
