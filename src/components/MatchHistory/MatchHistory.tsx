@@ -118,8 +118,7 @@ const MatchHistory = ({
     if (matches.length > 0) {
       getMatchesInfo();
     }
-  }, [matchInfo, puuid, matches.length]); // Needs a rerender because playermatchinfo gains data but doesn't re-render but
-  //can't  use playergameinfo causes multiple re-renders too many
+  }, [matchInfo, puuid, matches.length]); // need to use a better method than matches.length due to calling api 10 times? idk if that's good
 
   return (
     <div>
