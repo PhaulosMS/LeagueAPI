@@ -19,7 +19,7 @@ type PlayerInfo = {
   Placement: number;
 };
 
-const MatchHistoryBlock = ({
+export const MatchHistoryBlock = ({
   Augments,
   Traits,
   Units,
@@ -228,6 +228,7 @@ const MatchHistoryBlock = ({
     }
     return <div className={borderColourStrring}>{Placement}</div>;
   };
+  
 
   const sortPlacementBorder = () => {
     let placementColour = "";

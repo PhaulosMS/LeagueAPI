@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getMatch, getMatchHistoryData } from "../../services";
 import MatchHistoryBlock from "./MatchHistoryBlock";
 
@@ -118,12 +118,12 @@ const MatchHistory = ({
     if (matches.length > 0) {
       getMatchesInfo();
     }
-  }, [matchInfo, puuid]); // Needs a rerender because playermatchinfo gains data but doesn't re-render but
+  }, [matchInfo, puuid, matches.length]); // Needs a rerender because playermatchinfo gains data but doesn't re-render but
   //can't  use playergameinfo causes multiple re-renders too many
 
   return (
     <div>
-      {playerGameInfo ? (
+      {matches.length > 0 ? (
         <div>{sortMatchInfo()}</div>
       ) : (
         <div>Loading Data...</div>
