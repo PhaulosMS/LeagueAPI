@@ -4,6 +4,7 @@ import { getSummonerData, getTFTRankedData } from "../../services";
 import { SummonerForm } from "../../types/summonerDataTypes";
 import PlayerRank from "../../components/PlayerRank/PlayerRank";
 import MatchHistory from "../../components/MatchHistory/MatchHistory";
+import { useNavigate } from "react-router-dom";
 
 // can also maybe make this global type
 
@@ -80,8 +81,11 @@ const TeamfightTactics = () => {
         handleFormData={handleFormData}
         summonerName={summonerName}
       />
+
       {error ? (
-        <h1 className="text-red-600 mt-6">Summoner not found</h1>
+        <h1 className="text-red-600 mt-6 font-bold text-lg">
+          Summoner not found
+        </h1>
       ) : (
         summonerData && (
           <div className="flex flex-col items-center mt-8">

@@ -69,7 +69,8 @@ export const MatchHistoryBlock = ({
         return "border-purple-700 border-2 rounded-sm overflow-hidden";
       else if (
         augment_id.includes("Support") ||
-        augment_id.includes("StarCrossed")
+        augment_id.includes("StarCrossed") ||
+        augment_id.includes("Reflection")
       )
         return "border-green-700 border-2 rounded-sm overflow-hidden";
       else return "border-2 border-gray-800 rounded-full overflow-hidden";
@@ -78,7 +79,7 @@ export const MatchHistoryBlock = ({
     // Manipulating the string because riot sometimes gives back weird strings and makes it complicated for no reason
     let augment_id_manipulated = augment_id;
     augment_id_manipulated = augment_id_manipulated.replace(
-      /Carry|Support|5_|augment_|Glitch/gi,
+      /Carry|Support|5_|augment_|Glitch|HyperRoll/gi,
       ""
     );
     // If the augment is a champion augment basically add .TFT_SET8.png as normal augments don't have this image ending
@@ -86,7 +87,8 @@ export const MatchHistoryBlock = ({
       augment_id.includes("Carry") ||
       augment_id.includes("Support") ||
       augment_id.includes("Glitch") ||
-      augment_id.includes("StarCrossed")
+      augment_id.includes("StarCrossed") ||
+      augment_id.includes("Reflection")
     ) {
       augment_id_manipulated += ".TFT_Set8.png";
     }
@@ -228,7 +230,6 @@ export const MatchHistoryBlock = ({
     }
     return <div className={borderColourStrring}>{Placement}</div>;
   };
-  
 
   const sortPlacementBorder = () => {
     let placementColour = "";
@@ -296,7 +297,7 @@ export const MatchHistoryBlock = ({
   return (
     <div>
       <div
-        className={`bg-gray-800 flex mt-4 border-4 p-4 items-center rounded-md border-gray-500 ${sortPlacementBorder()}`}
+        className={`bg-gray-800 flex mt-4 border-4 p-4 items-center rounded-md ${sortPlacementBorder()}`}
       >
         {sortPlacement()}
         <div className="w-20">
