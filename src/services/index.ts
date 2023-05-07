@@ -81,13 +81,31 @@ export const getTFTChallengerLeaderboard = async (region: string) => {
   return response.data.entries;
 };
 
-export const getMatchHistoryData = async (
-  summonerName: string,
-  region: string
-) => {
-  const data = await getSummonerData(summonerName, region);
-  const puuid = data.puuid;
-  const URL = `https://europe.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=2&api_key=${API_KEY}`;
+export const getMatchHistoryData = async (puuid: string, region: string) => {
+  let RoutingRegion = "";
+
+  switch (region) {
+    case "eun1":
+    case "euw1":
+    case "tr1":
+    case "ru":
+      RoutingRegion = "europe";
+      break;
+    case "kr":
+    case "jp1":
+      RoutingRegion = "asia";
+      break;
+    case "na1":
+    case "la1":
+    case "la2":
+    case "br1":
+    case "oc1":
+      RoutingRegion = "americas";
+      break;
+    default:
+      break;
+  }
+  const URL = `https://${RoutingRegion}.api.riotgames.com/tft/match/v1/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${API_KEY}`;
   const config = {
     headers: {
       "X-Requested-With": "XMLHttpRequest",

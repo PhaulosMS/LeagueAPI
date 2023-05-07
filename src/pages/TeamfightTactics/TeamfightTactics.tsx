@@ -71,7 +71,7 @@ const TeamfightTactics = () => {
 
   useEffect(() => {
     getTFTRankedStats();
-  }, [summonerData]);
+  }, [summonerData]); // maybe no dependcy
 
   return (
     <div className="flex flex-col items-center mt-3">
@@ -106,9 +106,9 @@ const TeamfightTactics = () => {
       </div>
       {summonerData && (
         <MatchHistory
-          summonerName={summonerData.name}
           region={region}
           puuid={summonerData.puuid}
+          summonerName={summonerData.name}
         />
       )}
     </div>

@@ -62,19 +62,35 @@ const MatchHistoryBlock = ({
     if (dataAugments && dataAugments[augment_id]) {
       dataImageURL = dataAugments[augment_id]["image"]["full"];
     }
+
+    //Glitch = LeBlanc carry I do not know why do
     const HeroColours = () => {
       if (augment_id.includes("Carry") || augment_id.includes("Glitch"))
         return "border-purple-700 border-2 rounded-sm overflow-hidden";
-      else if (augment_id.includes("Support"))
+      else if (
+        augment_id.includes("Support") ||
+        augment_id.includes("StarCrossed")
+      )
         return "border-green-700 border-2 rounded-sm overflow-hidden";
+      else return "border-2 border-gray-800 rounded-full overflow-hidden";
     };
 
+    // Manipulating the string because riot sometimes gives back weird strings and makes it complicated for no reason
     let augment_id_manipulated = augment_id;
     augment_id_manipulated = augment_id_manipulated.replace(
-      /Carry|Support|5_|augment_/gi,
+      /Carry|Support|5_|augment_|Glitch/gi,
       ""
     );
-    augment_id_manipulated += ".TFT_Set8.png";
+    // If the augment is a champion augment basically add .TFT_SET8.png as normal augments don't have this image ending
+    if (
+      augment_id.includes("Carry") ||
+      augment_id.includes("Support") ||
+      augment_id.includes("Glitch") ||
+      augment_id.includes("StarCrossed")
+    ) {
+      augment_id_manipulated += ".TFT_Set8.png";
+    }
+
     //console.log(augment_id_manipulated); //uncomment this if augments aren't loading
 
     return (
@@ -121,39 +137,47 @@ const MatchHistoryBlock = ({
   };
 
   const Champion = ({ character_id }: any) => {
-    let borderColour = "purple";
-    let dataImageURL;
+    let borderColourString =
+      "border-4 border-purple-600 rounded-md overflow-hidden";
+    let dataImageURL = "";
     if (dataChamps && dataChamps[character_id]) {
       dataImageURL = dataChamps[character_id]["image"]["full"];
+      if (dataImageURL.includes("blanc")) {
+        dataImageURL = dataImageURL.replace("blanc", "Blanc");
+      }
     }
 
     if (dataChamps && dataChamps[character_id]) {
       switch (dataChamps[character_id]["tier"]) {
         case 1:
-          borderColour = "gray";
+          borderColourString =
+            "border-4 border-gray-600 rounded-md overflow-hidden";
           break;
         case 2:
-          borderColour = "green";
+          borderColourString =
+            "border-4 border-green-600 rounded-md overflow-hidden";
           break;
         case 3:
-          borderColour = "blue";
+          borderColourString =
+            "border-4 border-blue-600 rounded-md overflow-hidden";
           break;
         case 4:
-          borderColour = "purple";
+          borderColourString =
+            "border-4 border-purple-600 rounded-md overflow-hidden";
           break;
         case 5:
-          borderColour = "yellow";
+          borderColourString =
+            "border-4 border-yellow-600 rounded-md overflow-hidden";
           break;
         default:
-          borderColour = "purple";
+          borderColourString =
+            "border-4 border-purple-600 rounded-md overflow-hidden";
           break;
       }
     }
 
     return (
-      <div
-        className={`border-4 border-${borderColour}-600 rounded-md overflow-hidden`}
-      >
+      <div className={borderColourString}>
         <img
           src={`/augments/hero/${dataImageURL ? dataImageURL : "TFT8_Zac.png"}`}
           alt=""
@@ -183,6 +207,46 @@ const MatchHistoryBlock = ({
     });
   };
 
+  const sortPlacement = () => {
+    let borderColourStrring =
+      "text-yellow-500 border border-yellow-500 w-max px-1 mr-4 scale-150";
+    switch (Placement) {
+      case 1:
+        borderColourStrring =
+          "text-yellow-500 border border-yellow-500 w-max px-1 mr-4 scale-150";
+        break;
+      case 2:
+      case 3:
+      case 4:
+        borderColourStrring =
+          "text-blue-500 border border-blue-500 w-max px-1 mr-4 scale-150";
+        break;
+      default:
+        borderColourStrring =
+          "text-gray-500 border border-gray-500 w-max px-1 mr-4 scale-150";
+        break;
+    }
+    return <div className={borderColourStrring}>{Placement}</div>;
+  };
+
+  const sortPlacementBorder = () => {
+    let placementColour = "";
+    switch (Placement) {
+      case 1:
+        placementColour = "border-yellow-500";
+        break;
+      case 2:
+      case 3:
+      case 4:
+        placementColour = "border-blue-800";
+        break;
+      default:
+        placementColour = "border-gray-500";
+        break;
+    }
+    return placementColour;
+  };
+
   const handleTactician = () => {
     if (
       dataTactician &&
@@ -190,7 +254,7 @@ const MatchHistoryBlock = ({
     ) {
       return `/tacticians/${dataTactician[Tactician.item_ID]["image"]["full"]}`;
     }
-    return "../src/images/tacticians/Tooltip_TFT_Avatar_Blue.png";
+    return "/tacticians/Tooltip_TFT_Avatar_Blue.png";
   };
 
   const getTactician = async () => {
@@ -230,18 +294,18 @@ const MatchHistoryBlock = ({
 
   return (
     <div>
-      <div className="flex mt-4 border-4 border-green-800 p-4 items-center rounded-md ">
-        <div className="text-yellow-500 border border-yellow-500 w-max px-1 mr-4 scale-150">
-          {Placement}
-        </div>
-        <div>
-          <div>{queueIdConversion()}</div>
+      <div
+        className={`bg-gray-800 flex mt-4 border-4 p-4 items-center rounded-md border-gray-500 ${sortPlacementBorder()}`}
+      >
+        {sortPlacement()}
+        <div className="w-20">
+          <div className="">{queueIdConversion()}</div>
           <div>{FormatTime(Length)}</div>
         </div>
         <div className="flex items-center ml-2">
           <div className="relative inline-block">
             <img
-              className="rounded-full w-12 h-12 object-cover relative -z-10 border-2 border-[#ca9372]"
+              className="rounded-full w-12 h-12 object-cover relative z-1 border-4 border-[#ca9372]"
               src={handleTactician()}
               alt=""
             />
@@ -249,20 +313,20 @@ const MatchHistoryBlock = ({
               {Level}
             </span>
           </div>
-          <div className="flex ml-2">{sortTraits()}</div>
         </div>
-        <div className="flex items-center flex-grow ">
-          <div className="flex flex-col m-4 gap-1 ">{sortAugments()}</div>
-          <div className="flex gap-2">{sortUnits()}</div>
-          <div className="ml-3">
-            <div className="flex items-center">
-              <h1>{RGold}</h1>
-              <img src={Gold} alt="" className="w-4 h-4 " />
-            </div>
-            <div className="flex items-center">
-              <h1>{Damage}</h1>
-              <img src={DamageIcon} alt="" className="w-4 h-4" />
-            </div>
+        <div className="flex ml-2 w-36 flex-wrap">{sortTraits()}</div>
+        <div className="flex  mx-4">
+          <div className="flex flex-col gap-1 ">{sortAugments()}</div>
+        </div>
+        <div className="flex gap-2 mr-3">{sortUnits()}</div>
+        <div className="ml-auto">
+          <div className="flex items-center">
+            <h1>{RGold}</h1>
+            <img src={Gold} alt="" className="w-4 h-4 " />
+          </div>
+          <div className="flex items-center">
+            <h1>{Damage}</h1>
+            <img src={DamageIcon} alt="" className="w-4 h-4" />
           </div>
         </div>
       </div>

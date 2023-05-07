@@ -21,35 +21,40 @@ type PlayerGameInfoType = {
   tactician: any;
 };
 
-const PlayerGameInfo: PlayerGameInfoType[] = [];
-
 const MatchHistory = ({
-  summonerName,
   region,
   puuid,
+  summonerName,
 }: {
-  summonerName: string;
   region: string;
-  puuid: number;
+  puuid: string;
+  summonerName: string;
 }) => {
   const [matches, setMatches] = useState([]);
   const [matchInfo, setMatchInfo] = useState<MatchInfo[]>([]);
-  const [playerGameInfo, setPlayerGameInfo] =
-    useState<PlayerGameInfoType[]>(PlayerGameInfo);
+  const [playerGameInfo, setPlayerGameInfo] = useState<
+    PlayerGameInfoType[] | null
+  >(null);
+
   const getMatchHistoryIDs = async () => {
-    const response = await getMatchHistoryData(summonerName, region);
+    const response = await getMatchHistoryData(puuid, region);
     setMatches(response);
   };
 
   const getMatchesInfo = async () => {
-    if (matches) {
+    const unFetchedMatches = matches.filter((match) => {
+      return !matchInfo.some((info) => info.matchId === match);
+    });
+
+    if (unFetchedMatches.length > 0) {
       const response = await Promise.all(
-        matches.map(async (match) => {
+        unFetchedMatches.map(async (match) => {
           const data = await getMatch(match, region);
           return { matchId: match, data };
         })
       );
-      setMatchInfo(response);
+
+      setMatchInfo((prevMatchInfo) => [...prevMatchInfo, ...response]);
     }
   };
 
@@ -73,21 +78,7 @@ const MatchHistory = ({
         );
       });
     }
-    return <h1>nothing found</h1>;
-  };
-
-  const getPlayerData = async () => {
-    const tempPlayerGameInfo: any[] = [];
-
-    for (const match of matchInfo) {
-      const participants = match.data.info.participants;
-      for (let i = 0; i < participants.length; i++) {
-        if (participants[i].puuid === puuid) {
-          tempPlayerGameInfo.push(getPlayerGameInfo(i, match));
-        }
-      }
-    }
-    setPlayerGameInfo(tempPlayerGameInfo);
+    return null;
   };
 
   const getPlayerGameInfo = (index: number, match: any) => {
@@ -107,21 +98,36 @@ const MatchHistory = ({
     };
   };
 
+  const getPlayerData = async () => {
+    const tempPlayerGameInfo: any[] = [];
+
+    for (const match of matchInfo) {
+      const participants = match.data.info.participants;
+      for (let i = 0; i < participants.length; i++) {
+        if (participants[i].puuid === puuid) {
+          tempPlayerGameInfo.push(getPlayerGameInfo(i, match));
+        }
+      }
+    }
+    setPlayerGameInfo(tempPlayerGameInfo);
+  };
+
   useEffect(() => {
-    getMatchHistoryIDs();
-    getMatchesInfo();
     getPlayerData();
-  }, [matches]);
+    getMatchHistoryIDs();
+    if (matches.length > 0) {
+      getMatchesInfo();
+    }
+  }, [matchInfo, puuid]); // Needs a rerender because playermatchinfo gains data but doesn't re-render but
+  //can't  use playergameinfo causes multiple re-renders too many
 
   return (
     <div>
-      <button
-        className="bg-green-700 p-3 rounded-md"
-        onClick={() => getMatchHistoryIDs()}
-      >
-        getMatchHistoryData
-      </button>
-      <div>{sortMatchInfo()}</div>
+      {playerGameInfo ? (
+        <div>{sortMatchInfo()}</div>
+      ) : (
+        <div>Loading Data...</div>
+      )}
     </div>
   );
 };
