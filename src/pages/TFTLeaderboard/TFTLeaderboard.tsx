@@ -2,7 +2,6 @@ import { getTFTChallengerLeaderboard } from "../../services";
 import { useState, useEffect, useRef } from "react";
 import { regions } from "../../data/data";
 import ChallengerIcon from "../../images/ranks/TFT_Regalia_Challenger.png";
-import styles from "./styles.module.css";
 
 type LeaderboardResponse = {
   summonerName: string;
@@ -50,11 +49,14 @@ const TFTLeaderboard = () => {
         ? Math.ceil((player.summonerWins / games) * 100)
         : 0;
       return (
-        <tr className={styles.tableRow} key={player.summonerName}>
+        <tr
+          key={player.summonerName}
+          className="text-center bg-[#393838] border border-gray-700"
+        >
           <td>{index + 1}</td>
           <td>{player.summonerName}</td>
-          <td className={styles.tableRowRank}>
-            <img className={styles.rankIcon} src={ChallengerIcon} alt=""></img>
+          <td className="flex justify-center items-center">
+            <img className="w-16 h-16 " src={ChallengerIcon} alt=""></img>
             <span>Challenger</span>
           </td>
           <td>{player.LP}</td>
@@ -74,9 +76,7 @@ const TFTLeaderboard = () => {
   const regionSelector = Object.entries(regions).map(([region, regionID]) => (
     <div
       key={regionID}
-      className={`${styles["regionIcon"]} ${
-        regionID === regionRef.current ? styles["active"] : ""
-      }`}
+      className={`regionIcon ${regionID === regionRef.current ? "active" : ""}`}
       onClick={() => setRegionAndRegionRef(regionID)}
     >
       {region}
@@ -104,12 +104,14 @@ const TFTLeaderboard = () => {
       {loading ? (
         <h1>Loading...</h1>
       ) : (
-        <div className={styles.container}>
-          <div className={styles.regionSelector}>{regionSelector}</div>
-          <div className={styles.tableContainer}>
-            <table className={styles.table}>
+        <div className="">
+          <div className="flex justify-center gap-14 max-w-full mx-0 my-3">
+            {regionSelector}
+          </div>
+          <div className="mx-32 my-0 ">
+            <table className="w-full">
               <thead>
-                <tr>
+                <tr className="bg-[#292930]">
                   <th>#</th>
                   <th>Name</th>
                   <th>Tier</th>

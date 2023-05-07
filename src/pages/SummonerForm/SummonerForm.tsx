@@ -77,6 +77,7 @@ const SummonerForm = () => {
         handleFormData={handleFormData}
         summonerName={summonerName}
       />
+
       {error ? (
         <h1 className="error-message">Summoner not found</h1>
       ) : (
@@ -84,18 +85,9 @@ const SummonerForm = () => {
           <div>
             <h1 className="summoner-info">{summonerData.name}</h1>
             <img
-              src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${summonerData.profileIconId}.png`}
+              src={`http://ddragon.leagueoflegends.com/cdn/13.9.1/img/profileicon/${summonerData.profileIconId}.png`}
               alt=""
             />
-            {summonerWins != null && summonerLosses != null && (
-              <div>
-                <h1>
-                  W: {summonerWins} - L: {summonerLosses} G:{" "}
-                  {summonerWins + summonerLosses} {handleWinPercentage()}%
-                </h1>
-                {summonerState.tier} {summonerState.rank} {summonerState.LP}
-              </div>
-            )}
           </div>
         )
       )}

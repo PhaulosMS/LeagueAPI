@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { RankIcons } from "../../data/data";
 import defaultIcon from "../../images/ranks/TFT_Regalia_Provisional.png";
 
-import styles from "./styles.module.css";
-
 //TODO handle more of the error checking, player is purely unranked 0 games,
 // or just unranked cause of not hitting placements
 
@@ -46,35 +44,34 @@ const PlayerRank = ({
     left: string;
     right: string | number;
   }) => (
-    <div className={styles.gridItem}>
-      <span className={styles.gridItemLeft}>{left}</span>
-      <span className={styles.gridItemRight}>{right}</span>
+    <div className="flex justify-between">
+      <span className="text-left">{left}</span>
+      <span className="text-right">{right}</span>
     </div>
   );
 
   useEffect(() => {
     setUnranked(tier !== "unranked" ? true : false);
-    console.log(tier, unranked);
   }, [tier]);
 
   return (
-    <div className={styles.profileSummary}>
-      <div className={styles.tierSummary}>
-        <img className={styles.img} src={getRankIconUrl(tier)} alt="" />
+    <div className="bg-[#31313b] rounded-md border border-black">
+      <div className="flex items-center p-2 border-b   border-black ">
+        <img className="w-24 mr-3" src={getRankIconUrl(tier)} alt="" />
         <div>
-          <div className={styles.text}>Tier</div>
-          <span className={styles.textTier}>{tier.toLocaleLowerCase()} </span>
-          <span className={styles.text}>{rank} </span>
-          {unranked !== false && <span className={styles.text}>{LP} LP</span>}
+          <div className="text-2xl">Tier</div>
+          <span className=" text-2xl capitalize">
+            {tier.toLocaleLowerCase()}
+          </span>
+          <span className="text-2xl"> {rank} </span>
+          {unranked !== false && <span className="text-2xl"> {LP} LP</span>}
         </div>
       </div>
-      <div className={styles.profileStats}>
-        <StatItem left="Wins:" right={wins} />
-        <StatItem left="Win Rate:" right={`${calculateStats().winRate}%`} />
+      <div className=" grid grid-cols-2 gap-3 p-3">
         <StatItem left="Top 4:" right={wins} />
         <StatItem left="Top 4 Rate:" right={`${calculateStats().winRate}%`} />
+        <StatItem left="Bottom 4" right={losses} />
         <StatItem left="Played:" right={calculateStats().played} />
-        <StatItem left="Average:" right={1.0} />
       </div>
     </div>
   );
