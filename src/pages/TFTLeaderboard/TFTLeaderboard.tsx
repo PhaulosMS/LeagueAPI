@@ -2,6 +2,7 @@ import { getTFTChallengerLeaderboard } from "../../services";
 import { useState, useEffect, useRef } from "react";
 import { regions } from "../../data/data";
 import ChallengerIcon from "../../images/ranks/TFT_Regalia_Challenger.png";
+import { Link, useNavigate } from "react-router-dom";
 
 type LeaderboardResponse = {
   summonerName: string;
@@ -25,6 +26,7 @@ const TFTLeaderboard = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [region, setRegion] = useState<string>("euw1");
   const regionRef = useRef(region);
+  const navigate = useNavigate();
 
   const getLeaderboard = async () => {
     setLoading(true);
@@ -54,7 +56,16 @@ const TFTLeaderboard = () => {
           className="text-center bg-[#393838] border border-gray-700"
         >
           <td>{index + 1}</td>
-          <td>{player.summonerName}</td>
+          <td className="">
+            <h1
+              className="cursor-pointer hover:underline w-max m-auto"
+              onClick={() =>
+                navigate(`../../tft/${region}/${player.summonerName}`)
+              }
+            >
+              {player.summonerName}
+            </h1>
+          </td>
           <td className="flex justify-center items-center">
             <img className="w-16 h-16 " src={ChallengerIcon} alt=""></img>
             <span>Challenger</span>

@@ -70,7 +70,8 @@ export const MatchHistoryBlock = ({
       else if (
         augment_id.includes("Support") ||
         augment_id.includes("StarCrossed") ||
-        augment_id.includes("Reflection")
+        augment_id.includes("Reflection") ||
+        augment_id.includes("RenegadePartners")
       )
         return "border-green-700 border-2 rounded-sm overflow-hidden";
       else return "border-2 border-gray-800 rounded-full overflow-hidden";
@@ -88,7 +89,8 @@ export const MatchHistoryBlock = ({
       augment_id.includes("Support") ||
       augment_id.includes("Glitch") ||
       augment_id.includes("StarCrossed") ||
-      augment_id.includes("Reflection")
+      augment_id.includes("Reflection") ||
+      augment_id.includes("RenegadePartners")
     ) {
       augment_id_manipulated += ".TFT_Set8.png";
     }
@@ -98,7 +100,7 @@ export const MatchHistoryBlock = ({
     return (
       <div className={HeroColours()}>
         <img
-          src={`augments/${
+          src={`../../augments/${
             dataImageURL == "" ? `hero/${augment_id_manipulated}` : dataImageURL
           }`}
           alt=""
