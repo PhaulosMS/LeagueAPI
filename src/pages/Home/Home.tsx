@@ -17,17 +17,8 @@ const SummonerFormData: SummonerForm = {
 
 const Home = () => {
   const [summonerState, setSummonerState] = useState(SummonerFormData);
-  const [error, setError] = useState<boolean>(false);
-  const {
-    summonerData,
-    summonerName,
-    region,
-    tier,
-    rank,
-    LP,
-    summonerWins,
-    summonerLosses,
-  } = summonerState;
+  const [, setError] = useState<boolean>(false);
+  const { summonerData, summonerName, region } = summonerState;
 
   const navigate = useNavigate();
 

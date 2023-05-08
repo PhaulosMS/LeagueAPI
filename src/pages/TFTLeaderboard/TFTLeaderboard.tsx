@@ -2,7 +2,7 @@ import { getTFTChallengerLeaderboard } from "../../services";
 import { useState, useEffect, useRef } from "react";
 import { regions } from "../../data/data";
 import ChallengerIcon from "../../images/ranks/TFT_Regalia_Challenger.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type LeaderboardResponse = {
   summonerName: string;
