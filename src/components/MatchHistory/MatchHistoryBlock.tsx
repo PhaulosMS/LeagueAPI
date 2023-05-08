@@ -2,6 +2,7 @@ import Gold from "../../images/gold.png";
 import DamageIcon from "../../images/announce_icon_combat.png";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import starIcon from "../../images/star-svgrepo-com.png";
 
 // Sort rank border based on placement.
 // images are getting called before loaded? i think causing errors of get requests but they do actally load
@@ -18,7 +19,7 @@ type PlayerInfo = {
   Level: number;
   Placement: number;
 };
-
+// TODO Items for the champ and stars for 1/2/3
 export const MatchHistoryBlock = ({
   Augments,
   Traits,
@@ -34,6 +35,7 @@ export const MatchHistoryBlock = ({
   const [dataChamps, setDataChamps] = useState();
   const [dataAugments, setDataAugments] = useState();
   const [dataTraits, setDataTraits] = useState();
+  const [dataItems, setDataItems] = useState();
   const [dataTactician, setDataTactician] = useState<any>();
 
   const FormatTime = (time: number) => {
@@ -140,60 +142,102 @@ export const MatchHistoryBlock = ({
     );
   };
 
-  const Champion = ({ character_id }: any) => {
+  const Champion = ({ unit }: any) => {
     let borderColourString =
       "border-4 border-purple-600 rounded-md overflow-hidden";
     let dataImageURL = "";
-    if (dataChamps && dataChamps[character_id]) {
-      dataImageURL = dataChamps[character_id]["image"]["full"];
+    let itemImageURL = "";
+    if (dataChamps && dataChamps[unit.character_id]) {
+      dataImageURL = dataChamps[unit.character_id]["image"]["full"];
       if (dataImageURL.includes("blanc")) {
         dataImageURL = dataImageURL.replace("blanc", "Blanc");
       }
-    }
 
-    if (dataChamps && dataChamps[character_id]) {
-      switch (dataChamps[character_id]["tier"]) {
-        case 1:
-          borderColourString =
-            "border-4 border-gray-600 rounded-md overflow-hidden";
-          break;
-        case 2:
-          borderColourString =
-            "border-4 border-green-600 rounded-md overflow-hidden";
-          break;
-        case 3:
-          borderColourString =
-            "border-4 border-blue-600 rounded-md overflow-hidden";
-          break;
-        case 4:
-          borderColourString =
-            "border-4 border-purple-600 rounded-md overflow-hidden";
-          break;
-        case 5:
-          borderColourString =
-            "border-4 border-yellow-600 rounded-md overflow-hidden";
-          break;
-        default:
-          borderColourString =
-            "border-4 border-purple-600 rounded-md overflow-hidden";
-          break;
+      if (dataChamps && dataChamps[unit.character_id]) {
+        switch (dataChamps[unit.character_id]["tier"]) {
+          case 1:
+            borderColourString =
+              "border-4 border-gray-600 rounded-md overflow-hidden";
+            break;
+          case 2:
+            borderColourString =
+              "border-4 border-green-600 rounded-md overflow-hidden";
+            break;
+          case 3:
+            borderColourString =
+              "border-4 border-blue-600 rounded-md overflow-hidden";
+            break;
+          case 4:
+            borderColourString =
+              "border-4 border-purple-600 rounded-md overflow-hidden";
+            break;
+          case 5:
+            borderColourString =
+              "border-4 border-yellow-600 rounded-md overflow-hidden";
+            break;
+          default:
+            borderColourString =
+              "border-4 border-purple-600 rounded-md overflow-hidden";
+            break;
+        }
       }
     }
 
+    const sortItems = () => {
+      if (unit.itemNames.length > 0 && dataItems) {
+        return unit.itemNames.map((item: string | number, index: number) => {
+          if (dataItems[item]) itemImageURL = dataItems[item]["image"]["full"];
+          return (
+            <img
+              className=""
+              key={index}
+              src={itemImageURL ? `/items/${itemImageURL}` : ""}
+            />
+          );
+        });
+      }
+    };
+
+    const sortStars = () => {
+      let starsToRender = 0;
+      switch (unit.tier) {
+        case 1:
+          starsToRender = 1;
+          break;
+        case 2:
+          starsToRender = 2;
+          break;
+        case 3:
+          starsToRender = 3;
+          break;
+      }
+
+      const stars = [];
+      for (let i = 0; i < starsToRender; i++) {
+        stars.push(<img src={starIcon} />);
+      }
+      return stars;
+    };
+
     return (
-      <div className={borderColourString}>
-        <img
-          src={`/augments/hero/${dataImageURL ? dataImageURL : "TFT8_Zac.png"}`}
-          alt=""
-          className="w-10"
-        />
+      <div className="w-12">
+        <div className="justify-center flex h-4 w-auto mb-1">{sortStars()}</div>
+        <div className={borderColourString}>
+          <img
+            src={`/augments/hero/${
+              dataImageURL ? dataImageURL : "TFT8_Zac.png"
+            }`}
+            alt=""
+          />
+        </div>
+        <div className="flex h-4 mt-1">{sortItems()}</div>
       </div>
     );
   };
 
   const sortUnits = () => {
     return Units.map((unit: any, index: number) => {
-      return <Champion key={index} character_id={unit.character_id} />;
+      return <Champion key={index} unit={unit} />;
     });
   };
 
@@ -289,11 +333,19 @@ export const MatchHistoryBlock = ({
     setDataTraits(response.data.data);
   };
 
+  const getDataItems = async () => {
+    const response = await axios.get(
+      "http://ddragon.leagueoflegends.com/cdn/13.9.1/data/en_GB/tft-item.json"
+    );
+    setDataItems(response.data.data);
+  };
+
   useEffect(() => {
     getDataChamps();
     getDataAugment();
     getDataTraits();
     getTactician();
+    getDataItems();
   }, []);
 
   return (

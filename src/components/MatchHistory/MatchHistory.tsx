@@ -80,6 +80,8 @@ const MatchHistory = ({
     return null;
   };
 
+  console.log(playerGameInfo);
+
   const getPlayerGameInfo = (index: number, match: any) => {
     return {
       matchId: match.matchId,

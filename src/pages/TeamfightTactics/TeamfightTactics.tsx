@@ -76,14 +76,16 @@ const TeamfightTactics = () => {
   useEffect(() => {
     setSummonerState((prevState) => ({
       ...prevState,
-      summonerName: summonerParam,
+      summonerName: summonerParam.replaceAll(" ", ""),
       region: regionParam,
     }));
-  }, [params]); // need to update region query params only summername is working
+  }, [params]); //
 
   useEffect(() => {
     getTFTRankedStats();
   }, [summonerData]); // maybe no dependcy
+
+  console.log(summonerName.replaceAll(" ", ""));
 
   //SummonerSearch basically not being shown, only used to send a form submit automatically.
   return (
@@ -107,7 +109,7 @@ const TeamfightTactics = () => {
             <div className="col-start-1 col-end-1 row-end-1">
               <div className="flex flex-col items-center mt-8 relative">
                 <img
-                  className="border border-white rounded-sm w-80"
+                  className="border-2 border-white rounded-sm w-80 overflow-hidden"
                   src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${summonerData.profileIconId}.png`}
                   alt=""
                 />

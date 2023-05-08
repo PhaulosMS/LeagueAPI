@@ -29,7 +29,6 @@ const SummonerSearch = ({
   const formRef = useRef<HTMLFormElement>(null);
 
   // trying to get it to autosubmit if it's the correct path, and yeah
-  console.log(location.pathname);
 
   useEffect(() => {
     if (location.pathname.includes("/tft") && summonerName != "")
@@ -46,7 +45,7 @@ const SummonerSearch = ({
           type="text"
           name="summonerName"
           placeholder="Summoner Name"
-          value={summonerName}
+          value={summonerName.replaceAll("%20", "")}
           maxLength={20}
           onChange={(e) => handleFormData(e)}
         />
