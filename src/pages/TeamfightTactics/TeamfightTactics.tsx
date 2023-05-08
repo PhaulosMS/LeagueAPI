@@ -4,7 +4,7 @@ import { getSummonerData, getTFTRankedData } from "../../services";
 import { SummonerForm } from "../../types/summonerDataTypes";
 import PlayerRank from "../../components/PlayerRank/PlayerRank";
 import MatchHistory from "../../components/MatchHistory/MatchHistory";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const SummonerFormData: SummonerForm = {
   summonerData: undefined,
@@ -83,33 +83,37 @@ const TeamfightTactics = () => {
 
   useEffect(() => {
     getTFTRankedStats();
-  }, [summonerData]); // maybe no dependcy
+  }, [summonerData]); // maybe no dependency
 
   console.log(summonerName.replaceAll(" ", ""));
 
   //SummonerSearch basically not being shown, only used to send a form submit automatically.
   return (
-    <div className="mx-48">
-      <div className="grid grid-cols-3 gap-4">
-        <div className="scale-0 m-0 p-0 h-0 w-0">
-          <SummonerSearch
-            handleSubmit={handleSubmit}
-            handleFormData={handleFormData}
-            summonerName={summonerName}
-            region={regionParam}
-          />
+    <div>
+      {error && (
+        <div className="text-red-600 text-5xl text-center m-10">
+          <h1 className="mb-10">Summoner Not Found</h1>
+          <Link className="hover:underline text-white" to="/">
+            Back to Home Page
+          </Link>
         </div>
+      )}
+      <div className="mx-48">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="scale-0 m-0 p-0 h-0 w-0">
+            <SummonerSearch
+              handleSubmit={handleSubmit}
+              handleFormData={handleFormData}
+              summonerName={summonerName}
+              region={regionParam}
+            />
+          </div>
 
-        {error ? (
-          <h1 className="text-red-600 mt-6 font-bold text-lg">
-            Summoner not found
-          </h1>
-        ) : (
-          summonerData && (
+          {error != true && summonerData && (
             <div className="col-start-1 col-end-1 row-end-1">
               <div className="flex flex-col items-center mt-8 relative">
                 <img
-                  className="border-2 border-white rounded-sm w-80 overflow-hidden"
+                  className="border-2 border-white rounded-sm w-80 overflow-hidden shadow-white shadow-xl"
                   src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${summonerData.profileIconId}.png`}
                   alt=""
                 />
@@ -121,28 +125,28 @@ const TeamfightTactics = () => {
                 </h1>
               </div>
             </div>
-          )
-        )}
-        <div className="row-start-1 w-96 m-auto">
-          {summonerData && summonerWins != 0 && summonerLosses != 0 && (
-            <PlayerRank
-              tier={tier}
-              rank={rank}
-              wins={summonerWins}
-              losses={summonerLosses}
-              LP={LP}
-            />
+          )}
+          <div className="row-start-1 w-96 m-auto">
+            {summonerData && summonerWins != 0 && summonerLosses != 0 && (
+              <PlayerRank
+                tier={tier}
+                rank={rank}
+                wins={summonerWins}
+                losses={summonerLosses}
+                LP={LP}
+              />
+            )}
+          </div>
+          {summonerData && (
+            <div className="col-start-2 col-end-4 col-span-3 row-start-[-2] row-span-4 max-w-screen-xl">
+              <MatchHistory
+                region={region}
+                puuid={summonerData.puuid}
+                summonerName={summonerData.name}
+              />
+            </div>
           )}
         </div>
-        {summonerData && (
-          <div className="col-start-2 col-end-4 col-span-3 row-start-[-2] row-span-4 max-w-screen-xl">
-            <MatchHistory
-              region={region}
-              puuid={summonerData.puuid}
-              summonerName={summonerData.name}
-            />
-          </div>
-        )}
       </div>
     </div>
   );

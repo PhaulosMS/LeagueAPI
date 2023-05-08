@@ -32,7 +32,7 @@ const Home = () => {
       summonerWins: undefined,
       summonerLosses: undefined,
     }));
-    navigate(`/tft/${region}/${summonerName}`);
+    navigate(`/tft/${region}/${summonerName.replaceAll(" ", "")}`);
   };
 
   const handleFormData = (

@@ -19,7 +19,7 @@ type PlayerInfo = {
   Level: number;
   Placement: number;
 };
-// TODO Items for the champ and stars for 1/2/3
+// TODO change images to DDRAGON I think it's possible...
 export const MatchHistoryBlock = ({
   Augments,
   Traits,
@@ -133,11 +133,17 @@ export const MatchHistoryBlock = ({
       }
     }
 
+    console.log(dataImageURL);
+
     return (
       <div
         className={`tft-hexagon-${hexagonColor} h-6 w-6 bg-no-repeat flex items-center justify-center`}
       >
-        <img className="h-4 w-4" src={`/TraitIcons/${dataImageURL}`} alt="" />
+        <img
+          className="h-4 w-4"
+          src={`https://ddragon.leagueoflegends.com/cdn/13.8.1/img/tft-trait/${dataImageURL}`}
+          alt=""
+        />
       </div>
     );
   };
@@ -191,7 +197,11 @@ export const MatchHistoryBlock = ({
             <img
               className=""
               key={index}
-              src={itemImageURL ? `/items/${itemImageURL}` : ""}
+              src={
+                itemImageURL
+                  ? `https://ddragon.leagueoflegends.com/cdn/13.8.1/img/tft-item/${itemImageURL}`
+                  : ""
+              }
             />
           );
         });
@@ -300,9 +310,12 @@ export const MatchHistoryBlock = ({
       dataTactician &&
       dataTactician[Tactician.item_ID].id == Tactician.item_ID
     ) {
-      return `/tacticians/${dataTactician[Tactician.item_ID]["image"]["full"]}`;
+      //return `/tacticians/${dataTactician[Tactician.item_ID]["image"]["full"]}`;
+      return `http://ddragon.leagueoflegends.com/cdn/13.9.1/img/tft-tactician/${
+        dataTactician[Tactician.item_ID]["image"]["full"]
+      }`;
     }
-    return "/tacticians/Tooltip_TFT_Avatar_Blue.png";
+    return "http://ddragon.leagueoflegends.com/cdn/13.9.1/img/tft-tactician/Tooltip_TFT_Avatar_Blue.png";
   };
 
   const getTactician = async () => {
