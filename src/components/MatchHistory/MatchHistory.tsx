@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getMatch, getMatchHistoryData } from "../../services";
 import MatchHistoryBlock from "./MatchHistoryBlock";
 
@@ -24,7 +24,6 @@ type PlayerGameInfoType = {
 const MatchHistory = ({
   region,
   puuid,
-  summonerName,
 }: {
   region: string;
   puuid: string;
@@ -80,6 +79,8 @@ const MatchHistory = ({
     }
     return null;
   };
+
+  console.log(playerGameInfo);
 
   const getPlayerGameInfo = (index: number, match: any) => {
     return {

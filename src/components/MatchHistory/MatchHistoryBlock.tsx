@@ -2,6 +2,7 @@ import Gold from "../../images/gold.png";
 import DamageIcon from "../../images/announce_icon_combat.png";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import starIcon from "../../images/star-svgrepo-com.png";
 
 // Sort rank border based on placement.
 // images are getting called before loaded? i think causing errors of get requests but they do actally load
@@ -18,7 +19,7 @@ type PlayerInfo = {
   Level: number;
   Placement: number;
 };
-
+// TODO change images to DDRAGON I think it's possible...
 export const MatchHistoryBlock = ({
   Augments,
   Traits,
@@ -34,6 +35,7 @@ export const MatchHistoryBlock = ({
   const [dataChamps, setDataChamps] = useState();
   const [dataAugments, setDataAugments] = useState();
   const [dataTraits, setDataTraits] = useState();
+  const [dataItems, setDataItems] = useState();
   const [dataTactician, setDataTactician] = useState<any>();
 
   const FormatTime = (time: number) => {
@@ -70,7 +72,8 @@ export const MatchHistoryBlock = ({
       else if (
         augment_id.includes("Support") ||
         augment_id.includes("StarCrossed") ||
-        augment_id.includes("Reflection")
+        augment_id.includes("Reflection") ||
+        augment_id.includes("RenegadePartners")
       )
         return "border-green-700 border-2 rounded-sm overflow-hidden";
       else return "border-2 border-gray-800 rounded-full overflow-hidden";
@@ -88,7 +91,8 @@ export const MatchHistoryBlock = ({
       augment_id.includes("Support") ||
       augment_id.includes("Glitch") ||
       augment_id.includes("StarCrossed") ||
-      augment_id.includes("Reflection")
+      augment_id.includes("Reflection") ||
+      augment_id.includes("RenegadePartners")
     ) {
       augment_id_manipulated += ".TFT_Set8.png";
     }
@@ -98,7 +102,7 @@ export const MatchHistoryBlock = ({
     return (
       <div className={HeroColours()}>
         <img
-          src={`augments/${
+          src={`../../augments/${
             dataImageURL == "" ? `hero/${augment_id_manipulated}` : dataImageURL
           }`}
           alt=""
@@ -129,69 +133,121 @@ export const MatchHistoryBlock = ({
       }
     }
 
+    console.log(dataImageURL);
+
     return (
       <div
         className={`tft-hexagon-${hexagonColor} h-6 w-6 bg-no-repeat flex items-center justify-center`}
       >
-        <img className="h-4 w-4" src={`/TraitIcons/${dataImageURL}`} alt="" />
+        <img
+          className="h-4 w-4"
+          src={`https://ddragon.leagueoflegends.com/cdn/13.8.1/img/tft-trait/${dataImageURL}`}
+          alt=""
+        />
       </div>
     );
   };
 
-  const Champion = ({ character_id }: any) => {
+  const Champion = ({ unit }: any) => {
     let borderColourString =
       "border-4 border-purple-600 rounded-md overflow-hidden";
     let dataImageURL = "";
-    if (dataChamps && dataChamps[character_id]) {
-      dataImageURL = dataChamps[character_id]["image"]["full"];
+    let itemImageURL = "";
+    if (dataChamps && dataChamps[unit.character_id]) {
+      dataImageURL = dataChamps[unit.character_id]["image"]["full"];
       if (dataImageURL.includes("blanc")) {
         dataImageURL = dataImageURL.replace("blanc", "Blanc");
       }
-    }
 
-    if (dataChamps && dataChamps[character_id]) {
-      switch (dataChamps[character_id]["tier"]) {
-        case 1:
-          borderColourString =
-            "border-4 border-gray-600 rounded-md overflow-hidden";
-          break;
-        case 2:
-          borderColourString =
-            "border-4 border-green-600 rounded-md overflow-hidden";
-          break;
-        case 3:
-          borderColourString =
-            "border-4 border-blue-600 rounded-md overflow-hidden";
-          break;
-        case 4:
-          borderColourString =
-            "border-4 border-purple-600 rounded-md overflow-hidden";
-          break;
-        case 5:
-          borderColourString =
-            "border-4 border-yellow-600 rounded-md overflow-hidden";
-          break;
-        default:
-          borderColourString =
-            "border-4 border-purple-600 rounded-md overflow-hidden";
-          break;
+      if (dataChamps && dataChamps[unit.character_id]) {
+        switch (dataChamps[unit.character_id]["tier"]) {
+          case 1:
+            borderColourString =
+              "border-4 border-gray-600 rounded-md overflow-hidden";
+            break;
+          case 2:
+            borderColourString =
+              "border-4 border-green-600 rounded-md overflow-hidden";
+            break;
+          case 3:
+            borderColourString =
+              "border-4 border-blue-600 rounded-md overflow-hidden";
+            break;
+          case 4:
+            borderColourString =
+              "border-4 border-purple-600 rounded-md overflow-hidden";
+            break;
+          case 5:
+            borderColourString =
+              "border-4 border-yellow-600 rounded-md overflow-hidden";
+            break;
+          default:
+            borderColourString =
+              "border-4 border-purple-600 rounded-md overflow-hidden";
+            break;
+        }
       }
     }
 
+    const sortItems = () => {
+      if (unit.itemNames.length > 0 && dataItems) {
+        return unit.itemNames.map((item: string | number, index: number) => {
+          if (dataItems[item]) itemImageURL = dataItems[item]["image"]["full"];
+          return (
+            <img
+              className=""
+              key={index}
+              src={
+                itemImageURL
+                  ? `https://ddragon.leagueoflegends.com/cdn/13.8.1/img/tft-item/${itemImageURL}`
+                  : ""
+              }
+            />
+          );
+        });
+      }
+    };
+
+    const sortStars = () => {
+      let starsToRender = 0;
+      switch (unit.tier) {
+        case 1:
+          starsToRender = 1;
+          break;
+        case 2:
+          starsToRender = 2;
+          break;
+        case 3:
+          starsToRender = 3;
+          break;
+      }
+
+      const stars = [];
+      for (let i = 0; i < starsToRender; i++) {
+        stars.push(<img src={starIcon} />);
+      }
+      return stars;
+    };
+
     return (
-      <div className={borderColourString}>
-        <img
-          src={`/augments/hero/${dataImageURL ? dataImageURL : "TFT8_Zac.png"}`}
-          alt=""
-          className="w-10"
-        />
+      <div className="w-12">
+        <div className="justify-center flex h-4 w-auto mb-1">{sortStars()}</div>
+        <div className={borderColourString}>
+          <img
+            src={`/augments/hero/${
+              dataImageURL ? dataImageURL : "TFT8_Zac.png"
+            }`}
+            alt=""
+          />
+        </div>
+        <div className="flex h-4 mt-1">{sortItems()}</div>
       </div>
     );
   };
 
   const sortUnits = () => {
     return Units.map((unit: any, index: number) => {
-      return <Champion key={index} character_id={unit.character_id} />;
+      return <Champion key={index} unit={unit} />;
     });
   };
 
@@ -254,9 +310,12 @@ export const MatchHistoryBlock = ({
       dataTactician &&
       dataTactician[Tactician.item_ID].id == Tactician.item_ID
     ) {
-      return `/tacticians/${dataTactician[Tactician.item_ID]["image"]["full"]}`;
+      //return `/tacticians/${dataTactician[Tactician.item_ID]["image"]["full"]}`;
+      return `http://ddragon.leagueoflegends.com/cdn/13.9.1/img/tft-tactician/${
+        dataTactician[Tactician.item_ID]["image"]["full"]
+      }`;
     }
-    return "/tacticians/Tooltip_TFT_Avatar_Blue.png";
+    return "http://ddragon.leagueoflegends.com/cdn/13.9.1/img/tft-tactician/Tooltip_TFT_Avatar_Blue.png";
   };
 
   const getTactician = async () => {
@@ -287,11 +346,19 @@ export const MatchHistoryBlock = ({
     setDataTraits(response.data.data);
   };
 
+  const getDataItems = async () => {
+    const response = await axios.get(
+      "http://ddragon.leagueoflegends.com/cdn/13.9.1/data/en_GB/tft-item.json"
+    );
+    setDataItems(response.data.data);
+  };
+
   useEffect(() => {
     getDataChamps();
     getDataAugment();
     getDataTraits();
     getTactician();
+    getDataItems();
   }, []);
 
   return (
