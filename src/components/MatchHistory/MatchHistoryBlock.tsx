@@ -65,15 +65,18 @@ export const MatchHistoryBlock = ({
       dataImageURL = dataAugments[augment_id]["image"]["full"];
     }
 
-    //Glitch = LeBlanc carry I do not know why do
     const HeroColours = () => {
-      if (augment_id.includes("Carry") || augment_id.includes("Glitch"))
+      if (
+        augment_id.includes("Carry") ||
+        augment_id.includes("Glitch") || //LeBlanc
+        augment_id.includes("Reverberation") // Riven
+      )
         return "border-purple-700 border-2 rounded-sm overflow-hidden";
       else if (
         augment_id.includes("Support") ||
-        augment_id.includes("StarCrossed") ||
-        augment_id.includes("Reflection") ||
-        augment_id.includes("RenegadePartners")
+        augment_id.includes("StarCrossed") || // Kaisa
+        augment_id.includes("Reflection") || // Nilah
+        augment_id.includes("RenegadePartners") // Viego
       )
         return "border-green-700 border-2 rounded-sm overflow-hidden";
       else return "border-2 border-gray-800 rounded-full overflow-hidden";
@@ -82,22 +85,24 @@ export const MatchHistoryBlock = ({
     // Manipulating the string because riot sometimes gives back weird strings and makes it complicated for no reason
     let augment_id_manipulated = augment_id;
     augment_id_manipulated = augment_id_manipulated.replace(
-      /Carry|Support|5_|augment_|Glitch|HyperRoll/gi,
+      /Carry|Support|5_|augment_|Glitch|HyperRoll|Reverberation|2/gi,
       ""
     );
     // If the augment is a champion augment basically add .TFT_SET8.png as normal augments don't have this image ending
     if (
       augment_id.includes("Carry") ||
       augment_id.includes("Support") ||
-      augment_id.includes("Glitch") ||
-      augment_id.includes("StarCrossed") ||
-      augment_id.includes("Reflection") ||
-      augment_id.includes("RenegadePartners")
+      augment_id.includes("Glitch") || // LeBlanc
+      augment_id.includes("StarCrossed") || // KaiSa
+      augment_id.includes("Reflection") || // Nilah
+      augment_id.includes("RenegadePartners") || // Viego
+      augment_id.includes("Reverberation") // Riven
     ) {
       augment_id_manipulated += ".TFT_Set8.png";
     }
 
     //console.log(augment_id_manipulated); //uncomment this if augments aren't loading
+    // some augments come back as weird strings yet riot doesn't provide those images with same filename
 
     return (
       <div className={HeroColours()}>
@@ -132,8 +137,6 @@ export const MatchHistoryBlock = ({
           break;
       }
     }
-
-    console.log(dataImageURL);
 
     return (
       <div
@@ -226,6 +229,7 @@ export const MatchHistoryBlock = ({
       for (let i = 0; i < starsToRender; i++) {
         stars.push(<img src={starIcon} />);
       }
+      console.log(stars);
       return stars;
     };
 
@@ -341,7 +345,7 @@ export const MatchHistoryBlock = ({
 
   const getDataTraits = async () => {
     const response = await axios.get(
-      "http://ddragon.leagueoflegends.com/cdn/13.9.1/data/en_GB/tft-trait.json"
+      "http://ddragon.leagueoflegends.com/cdn/13.6.1/data/en_GB/tft-trait.json"
     );
     setDataTraits(response.data.data);
   };

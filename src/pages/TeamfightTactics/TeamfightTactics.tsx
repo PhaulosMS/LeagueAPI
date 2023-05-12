@@ -76,7 +76,7 @@ const TeamfightTactics = () => {
   useEffect(() => {
     setSummonerState((prevState) => ({
       ...prevState,
-      summonerName: summonerParam.replaceAll(" ", ""),
+      summonerName: summonerParam,
       region: regionParam,
     }));
   }, [params]); //
@@ -84,8 +84,6 @@ const TeamfightTactics = () => {
   useEffect(() => {
     getTFTRankedStats();
   }, [summonerData]); // maybe no dependency
-
-  console.log(summonerName.replaceAll(" ", ""));
 
   //SummonerSearch basically not being shown, only used to send a form submit automatically.
   return (
@@ -127,7 +125,7 @@ const TeamfightTactics = () => {
             </div>
           )}
           <div className="row-start-1 w-96 m-auto">
-            {summonerData && summonerWins != 0 && summonerLosses != 0 && (
+            {summonerData && (
               <PlayerRank
                 tier={tier}
                 rank={rank}
@@ -138,7 +136,7 @@ const TeamfightTactics = () => {
             )}
           </div>
           {summonerData && (
-            <div className="col-start-2 col-end-4 col-span-3 row-start-[-2] row-span-4 max-w-screen-xl">
+            <div className="col-start-2 col-end-4 col-span-3 row-start-[-2] row-span-4 max-w-screen-xl mt-4">
               <MatchHistory
                 region={region}
                 puuid={summonerData.puuid}

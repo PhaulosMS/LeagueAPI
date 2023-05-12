@@ -32,7 +32,9 @@ const Home = () => {
       summonerWins: undefined,
       summonerLosses: undefined,
     }));
-    navigate(`/tft/${region}/${summonerName.replaceAll(" ", "")}`);
+    navigate(
+      `/tft/${region}/${summonerName.replaceAll(" ", "").toLowerCase()}`
+    );
   };
 
   const handleFormData = (
@@ -67,11 +69,11 @@ const Home = () => {
   return (
     <div>
       <img
-        className="-z-10 absolute bg-cover opacity-25 w-[100vw] h-[100vh] object-cover"
+        className="-z-10 absolute bg-cover opacity-25 h-screen w-screen object-cover"
         src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_40.jpg"
         alt=""
       />
-      <div className="flex justify-center items-center h-screen z-10">
+      <div className="flex justify-center items-center z-10 h-screen">
         <SummonerSearch
           handleSubmit={handleSubmit}
           summonerName={summonerName}

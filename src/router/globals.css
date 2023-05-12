@@ -11,6 +11,7 @@
 body {
     background-color: rgb(28, 28, 30);
     color: white;
+    position: relative;
 }
 
 .tft-hexagon-bronze {

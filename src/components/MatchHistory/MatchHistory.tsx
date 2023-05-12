@@ -123,7 +123,7 @@ const MatchHistory = ({
 
   return (
     <div>
-      {matches.length > 0 ? (
+      {playerGameInfo && playerGameInfo.length > 0 ? (
         <div>{sortMatchInfo()}</div>
       ) : (
         <div>Loading Data...</div>
