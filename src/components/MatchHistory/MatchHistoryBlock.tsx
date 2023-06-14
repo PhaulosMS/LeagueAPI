@@ -4,8 +4,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import starIcon from "../../images/star-svgrepo-com.png";
 
-// RekSai is not being loaded in
-
 type PlayerInfo = {
   Augments: any;
   Traits: any;
@@ -18,7 +16,6 @@ type PlayerInfo = {
   Level: number;
   Placement: number;
 };
-// TODO change images to DDRAGON I think it's possible...
 export const MatchHistoryBlock = ({
   Augments,
   Traits,
@@ -67,7 +64,7 @@ export const MatchHistoryBlock = ({
     return (
       <div>
         <img
-          src={`../../augments/${dataImageURL}`}
+          src={`https://ddragon.leagueoflegends.com/cdn/13.12.1/img/tft-augment/${dataImageURL}`}
           alt=""
           className="h-8 w-8 rounded-lg"
         />
@@ -114,8 +111,14 @@ export const MatchHistoryBlock = ({
       "border-4 border-purple-600 rounded-md overflow-hidden";
     let dataImageURL = "";
     let itemImageURL = "";
-    if (unit.character_id == "tft9_reksai")
-      unit.character_id.replace("tft9_reksai", "TFT9_RekSai");
+    if (unit.character_id.includes("tft9_reksai")) {
+      unit.character_id = unit.character_id.replace(
+        "tft9_reksai",
+        "TFT9_RekSai"
+      );
+      console.log(unit.character_id);
+    }
+
     if (dataChamps && dataChamps[unit.character_id]) {
       dataImageURL = dataChamps[unit.character_id]["image"]["full"];
 
@@ -148,8 +151,6 @@ export const MatchHistoryBlock = ({
         }
       }
     }
-
-    console.log(Units);
 
     const sortItems = () => {
       if (unit.itemNames.length > 0 && dataItems) {
