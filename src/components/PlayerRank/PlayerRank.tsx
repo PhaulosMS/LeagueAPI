@@ -55,9 +55,9 @@ const PlayerRank = ({
   }, [tier]);
 
   return (
-    <div className="bg-[#31313b] rounded-md border border-black">
-      <div className="flex items-center p-2 border-b   border-black ">
-        <img className="w-24 mr-3" src={getRankIconUrl(tier)} alt="" />
+    <div className="rounded-md border border-black bg-[#31313b]">
+      <div className="flex items-center border-b border-black   p-2 ">
+        <img className="mr-3 w-24" src={getRankIconUrl(tier)} alt="" />
         <div>
           <div className="text-2xl">Tier</div>
           <span className=" text-2xl capitalize">
