@@ -33,6 +33,9 @@ export const MatchHistoryBlock = ({
   const [dataTraits, setDataTraits] = useState();
   const [dataItems, setDataItems] = useState();
   const [dataTactician, setDataTactician] = useState<any>();
+  const RiotDDServerVer = "14.6.1"
+  const RiotDDServer = `http://ddragon.leagueoflegends.com/cdn/${RiotDDServerVer}`
+
 
   const FormatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -64,7 +67,7 @@ export const MatchHistoryBlock = ({
     return (
       <div>
         <img
-          src={`https://ddragon.leagueoflegends.com/cdn/13.12.1/img/tft-augment/${dataImageURL}`}
+          src={`${RiotDDServer}/img/tft-augment/${dataImageURL}`}
           alt=""
           className="h-8 w-8 rounded-lg"
         />
@@ -99,7 +102,7 @@ export const MatchHistoryBlock = ({
       >
         <img
           className="h-4 w-4"
-          src={`https://ddragon.leagueoflegends.com/cdn/13.12.1/img/tft-trait/${dataImageURL}`}
+          src={`${RiotDDServer}/img/tft-trait/${dataImageURL}`}
           alt=""
         />
       </div>
@@ -162,7 +165,7 @@ export const MatchHistoryBlock = ({
               key={index}
               src={
                 itemImageURL
-                  ? `https://ddragon.leagueoflegends.com/cdn/13.12.1/img/tft-item/${itemImageURL}`
+                  ? `${RiotDDServer}/img/tft-item/${itemImageURL}`
                   : ""
               }
             />
@@ -193,7 +196,7 @@ export const MatchHistoryBlock = ({
     };
 
     return dataImageURL !== "" ? (
-      <div className="h-[96px] w-[48px] object-cover">
+      <div className="h-[96px] w-[48px] object-center">
         <div className="mb-1 flex h-4 w-auto justify-center">{sortStars()}</div>
         <div className={borderColourString}>
           <img src={`/augments/hero/${dataImageURL}`} alt="" />
@@ -268,44 +271,44 @@ export const MatchHistoryBlock = ({
       dataTactician[Tactician.item_ID].id == Tactician.item_ID
     ) {
       //return `/tacticians/${dataTactician[Tactician.item_ID]["image"]["full"]}`;
-      return `http://ddragon.leagueoflegends.com/cdn/13.12.1/img/tft-tactician/${
+      return `${RiotDDServer}/img/tft-tactician/${
         dataTactician[Tactician.item_ID]["image"]["full"]
       }`;
     }
-    return "http://ddragon.leagueoflegends.com/cdn/13.12.1/img/tft-tactician/Tooltip_TFT_Avatar_Blue.png";
+    return `${RiotDDServer}/img/tft-tactician/Tooltip_TFT_Avatar_Blue.png`;
   };
 
   const getTactician = async () => {
     const response = await axios.get(
-      "http://ddragon.leagueoflegends.com/cdn/13.12.1/data/en_GB/tft-tactician.json"
+      `${RiotDDServer}/data/en_GB/tft-tactician.json`
     );
     setDataTactician(response.data.data);
   };
 
   const getDataChamps = async () => {
     const response = await axios.get(
-      "http://ddragon.leagueoflegends.com/cdn/13.12.1/data/en_GB/tft-champion.json"
+      `${RiotDDServer}/data/en_GB/tft-champion.json`
     );
     setDataChamps(response.data.data);
   };
 
   const getDataAugment = async () => {
     const response = await axios.get(
-      "http://ddragon.leagueoflegends.com/cdn/13.12.1/data/en_GB/tft-augments.json"
+      `${RiotDDServer}/data/en_GB/tft-augments.json`
     );
     setDataAugments(response.data.data);
   };
 
   const getDataTraits = async () => {
     const response = await axios.get(
-      "http://ddragon.leagueoflegends.com/cdn/13.12.1/data/en_GB/tft-trait.json"
+      `${RiotDDServer}/data/en_GB/tft-trait.json`
     );
     setDataTraits(response.data.data);
   };
 
   const getDataItems = async () => {
     const response = await axios.get(
-      "http://ddragon.leagueoflegends.com/cdn/13.12.1/data/en_GB/tft-item.json"
+      `${RiotDDServer}/data/en_GB/tft-item.json`
     );
     setDataItems(response.data.data);
   };

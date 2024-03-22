@@ -38,10 +38,10 @@ const SummonerSearch = ({
   }, [location.pathname, region, summonerName]);
 
   return (
-    <div className="w-max max-w-md border-2 border-black rounded bg-[#121212]">
+    <div className="w-max max-w-md rounded border-2 border-black bg-[#121212]">
       <form ref={formRef} className="flex" onSubmit={(e) => handleSubmit(e)}>
         <input
-          className="bg-[#121212] mx-4 focus:outline-none"
+          className="mx-4 bg-[#121212] focus:outline-none"
           type="text"
           name="summonerName"
           placeholder="Summoner Name"
@@ -50,14 +50,14 @@ const SummonerSearch = ({
           onChange={(e) => handleFormData(e)}
         />
         <select
-          className="bg-[#121212] outline-none border-none rounded appearance-none px-3 text-center"
+          className="appearance-none rounded border-none bg-[#121212] px-3 text-center outline-none"
           name="region"
           onChange={(e) => handleFormData(e)}
           value={region}
         >
           {regionOptions}
         </select>
-        <button className="bg-green-700 p-3 rounded">Submit</button>
+        <button className="rounded bg-green-700 p-3">Submit</button>
       </form>
     </div>
   );
